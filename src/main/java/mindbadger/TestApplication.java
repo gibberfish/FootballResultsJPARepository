@@ -23,13 +23,19 @@ public class TestApplication {
 	public CommandLineRunner demo(DivisionRepository divisionRepository, SeasonRepository seasonRepository) {
 		return (args) -> {
 			// save a couple of customers
-			DivisionImpl division1 = new DivisionImpl("1", "Premier League");
 			SeasonImpl season = new SeasonImpl (2003);
-			SeasonDivision seasonDivision = new SeasonDivisionImpl(season, division1, 1);
-			season.getDivisionsInSeason().add(seasonDivision);
+
+			DivisionImpl division1 = new DivisionImpl("100", "Premier League");
 			
-			log.info ("Season: " + season.getSeasonNumber() + " / " + season.getDivisionsInSeason().size());
-			log.info ("SeasonDivision: " + season.getDivisionsInSeason().get(0).getSeason().getSeasonNumber() + " / " + season.getDivisionsInSeason().get(0).getDivision().getDivisionName() + " / " + season.getDivisionsInSeason().get(0).getDivisionPosition());
+			SeasonDivision seasonDivision = new SeasonDivisionImpl(season, division1, 1);
+			
+			
+			season.getSeasonDivisions().add(seasonDivision);
+			
+			log.info ("Season: " + season.getSeasonNumber() + " / " + season.getSeasonDivisions().size());
+			
+			SeasonDivision foundSeasonDivision = season.getSeasonDivisions().iterator().next();
+			log.info ("SeasonDivision: " + foundSeasonDivision.getSeason().getSeasonNumber() + " / " + foundSeasonDivision.getDivision().getDivisionName() + " / " + foundSeasonDivision.getDivisionPosition());
 			
 			divisionRepository.save(division1);
 			seasonRepository.save(season);

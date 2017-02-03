@@ -27,16 +27,13 @@ public class DivisionImpl implements Division, Serializable {
 	}
 	
 	public DivisionImpl (String id, String name) {
-		this.id = id;
+		this.id = id; // This is not in publisher, as it's
 		this.name = name;
 	}
 	
 	@Override
 	@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Basic(optional = false)
-	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="IdOrGenerated")
-	@GenericGenerator(name="IdOrGenerated", strategy="mindbadger.UseIdOrGenerate")
+	//@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "div_id")
 	public String getDivisionId() {
 		return id;
