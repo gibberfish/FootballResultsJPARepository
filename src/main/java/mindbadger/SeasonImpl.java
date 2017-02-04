@@ -4,12 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import mindbadger.footballresultsanalyser.domain.Season;
 import mindbadger.footballresultsanalyser.domain.SeasonDivision;
@@ -25,6 +20,7 @@ public class SeasonImpl implements Season, Serializable {
 	public SeasonImpl () {}
 	
 	public SeasonImpl (Integer seasonNumber) {
+		// The Book class doesn't pass in the PK - so the id field is null when created.
 		this.seasonNumber = seasonNumber;
 		this.seasonDivisions = new HashSet<SeasonDivision> ();
 	}
@@ -32,12 +28,15 @@ public class SeasonImpl implements Season, Serializable {
 	@Id
 	@Column(name = "ssn_num")
 	@Override
+	// The Book class uses @GeneratedValue(strategy = GenerationType.AUTO)
 	public Integer getSeasonNumber() {
 		return this.seasonNumber;
 	}
 
 	@Override
-	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, cascade=CascadeType.ALL, orphanRemoval=true)
+//	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, cascade=CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(targetEntity=SeasonDivisionImpl.class, cascade=CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name="ssn_num", nullable=false, referencedColumnName="ssn_num")
 	public Set<SeasonDivision> getSeasonDivisions() {
 		return this.seasonDivisions;
 	}

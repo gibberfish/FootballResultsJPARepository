@@ -27,15 +27,19 @@ public class TestApplication {
 
 			DivisionImpl division1 = new DivisionImpl("100", "Premier League");
 			
-			SeasonDivision seasonDivision = new SeasonDivisionImpl(season, division1, 1);
+			SeasonDivision seasonDivision = new SeasonDivisionImpl();
+			seasonDivision.setSeason(season);
+			seasonDivision.setDivision(division1);
+			seasonDivision.setDivisionPosition(1);
 			
+			seasonRepository.save(season);
 			
 			season.getSeasonDivisions().add(seasonDivision);
 			
-			log.info ("Season: " + season.getSeasonNumber() + " / " + season.getSeasonDivisions().size());
-			
-			SeasonDivision foundSeasonDivision = season.getSeasonDivisions().iterator().next();
-			log.info ("SeasonDivision: " + foundSeasonDivision.getSeason().getSeasonNumber() + " / " + foundSeasonDivision.getDivision().getDivisionName() + " / " + foundSeasonDivision.getDivisionPosition());
+//			log.info ("Season: " + season.getSeasonNumber() + " / " + season.getSeasonDivisions().size());
+//			
+//			SeasonDivision foundSeasonDivision = season.getSeasonDivisions().iterator().next();
+//			log.info ("SeasonDivision: " + foundSeasonDivision.getSeason().getSeasonNumber() + " / " + foundSeasonDivision.getDivision().getDivisionName() + " / " + foundSeasonDivision.getDivisionPosition());
 			
 			divisionRepository.save(division1);
 			seasonRepository.save(season);
@@ -44,18 +48,18 @@ public class TestApplication {
 			//season.getDivsionsInSeason().
 			
 			// fetch all customers
-			log.info("Customers found with findAll():");
-			log.info("-------------------------------");
-			for (DivisionImpl division : divisionRepository.findAll()) {
-				log.info(division.toString());
-			}
-			log.info("");
-
-			// fetch an individual customer by ID
-			DivisionImpl division = divisionRepository.findOne("1");
-			log.info(division.getDivisionId());
-			log.info(division.getDivisionName());
-			log.info("");
+//			log.info("Customers found with findAll():");
+//			log.info("-------------------------------");
+//			for (DivisionImpl division : divisionRepository.findAll()) {
+//				log.info(division.toString());
+//			}
+//			log.info("");
+//
+//			// fetch an individual customer by ID
+//			DivisionImpl division = divisionRepository.findOne("1");
+//			log.info(division.getDivisionId());
+//			log.info(division.getDivisionName());
+//			log.info("");
 
 		};
 	}

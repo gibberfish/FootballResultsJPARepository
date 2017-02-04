@@ -3,12 +3,7 @@ package mindbadger;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,32 +22,33 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	private Division division;
 	private int divisionPosition;
 	
-	public SeasonDivisionImpl () {
-		log.info("Creating a new instance of SeasonDivisionImpl using default constructor");
-	}
-	
-	public SeasonDivisionImpl (Season season, Division division, int divisionPosition) {
-		log.info("Creating a new instance of SeasonDivisionImpl using values constructor");
-		this.season = season;
-		this.division = division;
-		this.divisionPosition = divisionPosition;
-	}
+//	public SeasonDivisionImpl () {
+//		//log.info(this.toString() + " / Creating a new instance of SeasonDivisionImpl using default constructor");
+//	}
+//	
+//	public SeasonDivisionImpl (Season season, Division division, int divisionPosition) {
+//		//log.info(this.toString() + " / Creating a new instance of SeasonDivisionImpl using values constructor");
+//		this.season = season;
+//		this.division = division;
+//		this.divisionPosition = divisionPosition;
+//	}
 	
 	@Id
 	@Override
 	@ManyToOne(targetEntity=SeasonImpl.class)
+	//@ManyToOne(targetEntity=SeasonImpl.class, cascade=CascadeType.ALL)
 	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")
 	public Season getSeason() {
-		log.info("Returning season from SeasonDivision: " + (this.season == null ? "NULL" : this.season.getSeasonNumber()) );
+		//log.info(this.toString() + " / Returning season from SeasonDivision: " + (this.season == null ? "NULL" : this.season.getSeasonNumber()) );
 		return this.season;
 	}
 
 	@Id
 	@Override
 	@ManyToOne(targetEntity=DivisionImpl.class)
-	@JoinColumn(name = "div_id")//, referencedColumnName="div_id")
+	@JoinColumn(name = "div_id", referencedColumnName="div_id")
 	public Division getDivision() {
-		log.info("Returning division from SeasonDivision: " + (this.division == null ? "NULL" : this.division.getDivisionId() + " / " + this.division.getDivisionName()));
+		//log.info("Returning division from SeasonDivision: " + (this.division == null ? "NULL" : this.division.getDivisionId() + " / " + this.division.getDivisionName()));
 		return this.division;
 	}
 
@@ -79,7 +75,7 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	
 	@Override
 	public int compareTo(SeasonDivision compareTo) {
-		log.info("compareTo called on SeasonDivison");
+		//log.info("compareTo called on SeasonDivison");
 		//TODO This was copied from the couchbase dao code - consider an abstract superclass
 		if (compareTo.getSeason().getSeasonNumber() != this.getSeason().getSeasonNumber()) {
 			return this.getSeason().getSeasonNumber() - compareTo.getSeason().getSeasonNumber();
@@ -92,14 +88,14 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		log.info("equals called on SeasonDivison");
+		//log.info("equals called on SeasonDivison");
 		if (obj instanceof SeasonDivision) {
 			SeasonDivision compareTo = (SeasonDivision) obj;
 			Integer ssnNumToCompare = (compareTo.getSeason() == null ? null : compareTo.getSeason().getSeasonNumber());
 			String divIdToCompare = (compareTo.getDivision() == null ? null : compareTo.getDivision().getDivisionId());
 			
-			Integer ssnNum = (this.getSeason() == null ? null : this.getSeason().getSeasonNumber());
-			String divId = (this.getDivision() == null ? null : this.getDivision().getDivisionId());
+			Integer ssnNum = (season == null ? null : season.getSeasonNumber());
+			String divId = (division == null ? null : division.getDivisionId());
 			
 			return (ssnNum != null && (ssnNumToCompare == ssnNum && divIdToCompare == divId));
 			
@@ -109,9 +105,9 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 
 	@Override
 	public int hashCode() {
-		log.info("hashCode called on SeasonDivison");
-		Integer ssnNum = (this.getSeason() == null ? null : this.getSeason().getSeasonNumber());
-		String divId = (this.getDivision() == null ? null : this.getDivision().getDivisionId());
+		//log.info("hashCode called on SeasonDivison");
+		Integer ssnNum = (season == null ? null : season.getSeasonNumber());
+		String divId = (division == null ? null : division.getDivisionId());
 
 		return Objects.hash(ssnNum, divId);
 	}

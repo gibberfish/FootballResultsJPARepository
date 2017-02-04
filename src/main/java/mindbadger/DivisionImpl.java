@@ -1,18 +1,12 @@
 package mindbadger;
 
 import java.io.Serializable;
+import java.util.Set;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.*;
 
 import mindbadger.footballresultsanalyser.domain.Division;
+import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 
 @Entity
 @Table(name = "division")
@@ -22,22 +16,30 @@ public class DivisionImpl implements Division, Serializable {
 
 	private String id;
 	private String name;
+	//private Set<SeasonDivision> seasonDivisions; 
 	
 	protected DivisionImpl () {
 	}
 	
 	public DivisionImpl (String id, String name) {
-		this.id = id; // This is not in publisher, as it's
+		this.id = id; // This is not in publisher, as it's auto-generated
 		this.name = name;
 	}
 	
 	@Override
 	@Id
-	//@GeneratedValue(strategy=GenerationType.AUTO)
+	//The Publisher has @GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "div_id")
 	public String getDivisionId() {
 		return id;
 	}
+	
+	//@OneToMany(mappedBy = "division", targetEntity=SeasonDivisionImpl.class)
+//	@OneToMany(targetEntity=SeasonDivisionImpl.class)
+//	@JoinColumn(name="div_id", referencedColumnName="div_id")
+//	public Set<SeasonDivision> getSeasonDivisions() {
+//		return this.seasonDivisions;
+//	}
 
 	@Override
 	@Column(name = "div_name")
@@ -55,4 +57,7 @@ public class DivisionImpl implements Division, Serializable {
 		this.name = name;
 	}
 
+//	public void setSeasonDivisions(Set<SeasonDivision> seasonDivisions) {
+//		this.seasonDivisions = seasonDivisions;
+//	}
 }
