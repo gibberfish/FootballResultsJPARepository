@@ -17,13 +17,11 @@ public class DivisionImpl implements Division, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-//	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "div_id")
 	private String id;
 
 	@Column(name = "div_name")
 	private String name;
-//	private Set<SeasonDivision> seasonDivisions; 
 	
 	protected DivisionImpl () {
 	}
@@ -38,11 +36,6 @@ public class DivisionImpl implements Division, Serializable {
 		return id;
 	}
 	
-//	@OneToMany(mappedBy = "division", targetEntity=SeasonDivisionImpl.class)
-//	public Set<SeasonDivision> getSeasonDivisions() {
-//		return this.seasonDivisions;
-//	}
-
 	@Override
 	public String getDivisionName() {
 		return name;
@@ -76,9 +69,4 @@ public class DivisionImpl implements Division, Serializable {
 		
 		return (toString().equals(divisionImplToCompare.toString()));
 	}
-
-	
-//	public void setSeasonDivisions(Set<SeasonDivision> seasonDivisions) {
-//		this.seasonDivisions = seasonDivisions;
-//	}
 }

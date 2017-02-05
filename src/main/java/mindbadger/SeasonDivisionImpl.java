@@ -20,26 +20,22 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	private static final Logger log = LoggerFactory.getLogger(SeasonDivisionImpl.class);
 	
 	@Id
-//	@ManyToOne(targetEntity=SeasonImpl.class, cascade={CascadeType.MERGE,CascadeType.PERSIST})
-//	@ManyToOne(targetEntity=SeasonImpl.class, mappedBy="season_division")
-	@ManyToOne(targetEntity=SeasonImpl.class)
-	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num", nullable=false, updatable=false)
+	@ManyToOne(targetEntity=SeasonImpl.class, cascade=CascadeType.DETACH)
+	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")
 	private Season season;
 
 	@Id
-	@ManyToOne(targetEntity=DivisionImpl.class)
-	@JoinColumn(name = "div_id", referencedColumnName="div_id", nullable=false, updatable=false)
+	@ManyToOne(targetEntity=DivisionImpl.class, cascade=CascadeType.DETACH)
+	@JoinColumn(name = "div_id", referencedColumnName="div_id")
 	private Division division;
 
 	@Column(name = "div_pos")
 	private int divisionPosition;
 	
 	public SeasonDivisionImpl () {
-		//log.info(this.toString() + " / Creating a new instance of SeasonDivisionImpl using default constructor");
 	}
 	
 	public SeasonDivisionImpl (Season season, Division division, int divisionPosition) {
-		//log.info(this.toString() + " / Creating a new instance of SeasonDivisionImpl using values constructor");
 		this.season = season;
 		this.division = division;
 		this.divisionPosition = divisionPosition;
@@ -51,13 +47,11 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	
 	@Override
 	public Season getSeason() {
-		//log.info("#######################################################################" + this.toString() + " / Returning season from SeasonDivision: " + (this.season == null ? "NULL" : this.season.getSeasonNumber()) );
 		return this.season;
 	}
 
 	@Override
 	public Division getDivision() {
-		//log.info("Returning division from SeasonDivision: " + (this.division == null ? "NULL" : this.division.getDivisionId() + " / " + this.division.getDivisionName()));
 		return this.division;
 	}
 

@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Cascade;
+
 import mindbadger.footballresultsanalyser.domain.Season;
 import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 
@@ -17,14 +19,9 @@ public class SeasonImpl implements Season, Serializable {
 
 	@Id
 	@Column(name = "ssn_num")
-	private int seasonNumber;
+	private Integer seasonNumber;
 
-	//@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, cascade={CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-	//@OneToMany(targetEntity=SeasonDivisionImpl.class, fetch = FetchType.EAGER, cascade={CascadeType.MERGE,CascadeType.PERSIST})
-	//@JoinColumn(name="ssn_num", insertable=false, updatable=false)
-//	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, fetch = FetchType.EAGER)
-//	@JoinColumn(name="ssn_num")
-	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
+	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, fetch = FetchType.EAGER, cascade=CascadeType.DETACH)
 	private Set<SeasonDivision> seasonDivisions; 
 	
 	public SeasonImpl () {
@@ -37,7 +34,7 @@ public class SeasonImpl implements Season, Serializable {
 	}
 	
 	@Override
-	public int getSeasonNumber() {
+	public Integer getSeasonNumber() {
 		return this.seasonNumber;
 	}
 
@@ -47,7 +44,7 @@ public class SeasonImpl implements Season, Serializable {
 	}
 	
 	@Override
-	public void setSeasonNumber(int seasonNumber) {
+	public void setSeasonNumber(Integer seasonNumber) {
 		this.seasonNumber = seasonNumber;
 	}
 

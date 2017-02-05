@@ -1,5 +1,8 @@
 package mindbadger;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -86,14 +89,17 @@ public class TestApplication {
 			seasonDivision.setDivision(savedDivision);
 			seasonDivision.setDivisionPosition(1);
 			
-			retrievedSeason.getSeasonDivisions().add(seasonDivision);
-
+			Set<SeasonDivision> newSeasonDivisions = new HashSet<SeasonDivision> ();
+			newSeasonDivisions.add(seasonDivision);
+			//retrievedSeason.getSeasonDivisions().add(seasonDivision);
+			retrievedSeason.setSeasonDivisions(newSeasonDivisions);
+			
 			log.info("Season with division attached : " + retrievedSeason.toString());
 			log.info("Retrieved Season Instance : " + System.identityHashCode(retrievedSeason));
 			
 			log.error("************ STEP 7: Save the season with this new relationship *************");
 			
-			seasonRepository.flush();
+			//seasonRepository.flush();
 			seasonRepository.save(retrievedSeason);
 
 			

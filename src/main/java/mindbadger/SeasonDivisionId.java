@@ -6,7 +6,7 @@ import java.util.Objects;
 public class SeasonDivisionId implements Serializable {
 	private static final long serialVersionUID = 8013910648038828574L;
 
-	private int season;
+	private Integer season;
 	private String division;
 
 	@Override
@@ -28,7 +28,7 @@ public class SeasonDivisionId implements Serializable {
 	
 	
 	
-	public int getSeason() {
+	public Integer getSeason() {
 		return season;
 	}
 	
@@ -36,7 +36,7 @@ public class SeasonDivisionId implements Serializable {
 		return division;
 	}
 
-	public void setSeason(int season) {
+	public void setSeason(Integer season) {
 		this.season = season;
 	}
 	
