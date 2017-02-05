@@ -14,6 +14,7 @@ import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 
 @Entity
 @Table(name = "season_division")
+@IdClass(SeasonDivisionId.class)
 public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = LoggerFactory.getLogger(SeasonDivisionImpl.class);
@@ -22,21 +23,21 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	private Division division;
 	private int divisionPosition;
 	
-//	public SeasonDivisionImpl () {
-//		//log.info(this.toString() + " / Creating a new instance of SeasonDivisionImpl using default constructor");
-//	}
-//	
-//	public SeasonDivisionImpl (Season season, Division division, int divisionPosition) {
-//		//log.info(this.toString() + " / Creating a new instance of SeasonDivisionImpl using values constructor");
-//		this.season = season;
-//		this.division = division;
-//		this.divisionPosition = divisionPosition;
-//	}
+	public SeasonDivisionImpl () {
+		//log.info(this.toString() + " / Creating a new instance of SeasonDivisionImpl using default constructor");
+	}
+	
+	public SeasonDivisionImpl (Season season, Division division, int divisionPosition) {
+		//log.info(this.toString() + " / Creating a new instance of SeasonDivisionImpl using values constructor");
+		this.season = season;
+		this.division = division;
+		this.divisionPosition = divisionPosition;
+	}
 	
 	@Id
 	@Override
-	@ManyToOne(targetEntity=SeasonImpl.class)
-	//@ManyToOne(targetEntity=SeasonImpl.class, cascade=CascadeType.ALL)
+	//@ManyToOne(targetEntity=SeasonImpl.class)
+	@ManyToOne(targetEntity=SeasonImpl.class, cascade={CascadeType.MERGE,CascadeType.PERSIST})
 	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")
 	public Season getSeason() {
 		//log.info(this.toString() + " / Returning season from SeasonDivision: " + (this.season == null ? "NULL" : this.season.getSeasonNumber()) );
@@ -86,30 +87,30 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 		}
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		//log.info("equals called on SeasonDivison");
-		if (obj instanceof SeasonDivision) {
-			SeasonDivision compareTo = (SeasonDivision) obj;
-			Integer ssnNumToCompare = (compareTo.getSeason() == null ? null : compareTo.getSeason().getSeasonNumber());
-			String divIdToCompare = (compareTo.getDivision() == null ? null : compareTo.getDivision().getDivisionId());
-			
-			Integer ssnNum = (season == null ? null : season.getSeasonNumber());
-			String divId = (division == null ? null : division.getDivisionId());
-			
-			return (ssnNum != null && (ssnNumToCompare == ssnNum && divIdToCompare == divId));
-			
-		}
-		return super.equals(obj);
-	}
-
-	@Override
-	public int hashCode() {
-		//log.info("hashCode called on SeasonDivison");
-		Integer ssnNum = (season == null ? null : season.getSeasonNumber());
-		String divId = (division == null ? null : division.getDivisionId());
-
-		return Objects.hash(ssnNum, divId);
-	}
+//	@Override
+//	public boolean equals(Object obj) {
+//		//log.info("equals called on SeasonDivison");
+//		if (obj instanceof SeasonDivision) {
+//			SeasonDivision compareTo = (SeasonDivision) obj;
+//			Integer ssnNumToCompare = (compareTo.getSeason() == null ? null : compareTo.getSeason().getSeasonNumber());
+//			String divIdToCompare = (compareTo.getDivision() == null ? null : compareTo.getDivision().getDivisionId());
+//			
+//			Integer ssnNum = (season == null ? null : season.getSeasonNumber());
+//			String divId = (division == null ? null : division.getDivisionId());
+//			
+//			return (ssnNum != null && (ssnNumToCompare == ssnNum && divIdToCompare == divId));
+//			
+//		}
+//		return super.equals(obj);
+//	}
+//
+//	@Override
+//	public int hashCode() {
+//		//log.info("hashCode called on SeasonDivison");
+//		Integer ssnNum = (season == null ? null : season.getSeasonNumber());
+//		String divId = (division == null ? null : division.getDivisionId());
+//
+//		return Objects.hash(ssnNum, divId);
+//	}
 
 }

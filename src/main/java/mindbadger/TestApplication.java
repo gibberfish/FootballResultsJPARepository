@@ -22,27 +22,55 @@ public class TestApplication {
 	@Bean
 	public CommandLineRunner demo(DivisionRepository divisionRepository, SeasonRepository seasonRepository) {
 		return (args) -> {
-			// save a couple of customers
-			SeasonImpl season = new SeasonImpl (2003);
+			
+			DivisionImpl division1 = new DivisionImpl("100", "Premier Fish");
+			log.info("Created new Division : " + division1.toString());
+			
+			DivisionImpl savedDivision = divisionRepository.save(division1);
 
-			DivisionImpl division1 = new DivisionImpl("100", "Premier League");
+			savedDivision = divisionRepository.findOne("100");
+			
+			log.info("Retrieved Division : " + savedDivision.toString());
+			
+			savedDivision.setDivisionName("Premier League");
+			savedDivision = divisionRepository.save(savedDivision);
+			
+			log.info("Re-retrieved Division : " + savedDivision.toString());
+			
+			
+			
+			
+			SeasonImpl season = new SeasonImpl (2003);
+			log.info("Created new Season : " + season.toString());
+			
+			SeasonImpl savedSeason = seasonRepository.save(season);
+			savedSeason = seasonRepository.findOne(2003);
+			
+			log.info("Retrieved Season : " + savedSeason.toString());
+
+			
+			
 			
 			SeasonDivision seasonDivision = new SeasonDivisionImpl();
-			seasonDivision.setSeason(season);
-			seasonDivision.setDivision(division1);
+			seasonDivision.setSeason(savedSeason);
+			seasonDivision.setDivision(savedDivision);
 			seasonDivision.setDivisionPosition(1);
 			
-			seasonRepository.save(season);
+			savedSeason.getSeasonDivisions().add(seasonDivision);
+
+			log.info("Season with division attached : " + savedSeason.toString());
 			
-			season.getSeasonDivisions().add(seasonDivision);
+			seasonRepository.save(savedSeason);
+
+			
+			
 			
 //			log.info ("Season: " + season.getSeasonNumber() + " / " + season.getSeasonDivisions().size());
 //			
 //			SeasonDivision foundSeasonDivision = season.getSeasonDivisions().iterator().next();
 //			log.info ("SeasonDivision: " + foundSeasonDivision.getSeason().getSeasonNumber() + " / " + foundSeasonDivision.getDivision().getDivisionName() + " / " + foundSeasonDivision.getDivisionPosition());
 			
-			divisionRepository.save(division1);
-			seasonRepository.save(season);
+
 			
 			
 			//season.getDivsionsInSeason().

@@ -1,6 +1,8 @@
 package mindbadger;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -16,7 +18,7 @@ public class DivisionImpl implements Division, Serializable {
 
 	private String id;
 	private String name;
-	//private Set<SeasonDivision> seasonDivisions; 
+	private Set<SeasonDivision> seasonDivisions; 
 	
 	protected DivisionImpl () {
 	}
@@ -28,15 +30,13 @@ public class DivisionImpl implements Division, Serializable {
 	
 	@Override
 	@Id
-	//The Publisher has @GeneratedValue(strategy=GenerationType.AUTO)
+//	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "div_id")
 	public String getDivisionId() {
 		return id;
 	}
 	
-	//@OneToMany(mappedBy = "division", targetEntity=SeasonDivisionImpl.class)
-//	@OneToMany(targetEntity=SeasonDivisionImpl.class)
-//	@JoinColumn(name="div_id", referencedColumnName="div_id")
+//	@OneToMany(mappedBy = "division", targetEntity=SeasonDivisionImpl.class)
 //	public Set<SeasonDivision> getSeasonDivisions() {
 //		return this.seasonDivisions;
 //	}
@@ -57,6 +57,26 @@ public class DivisionImpl implements Division, Serializable {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "["+id+":"+name+"]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(toString());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof DivisionImpl)) return false;
+		
+		DivisionImpl divisionImplToCompare = (DivisionImpl) obj;
+		
+		return (toString().equals(divisionImplToCompare.toString()));
+	}
+
+	
 //	public void setSeasonDivisions(Set<SeasonDivision> seasonDivisions) {
 //		this.seasonDivisions = seasonDivisions;
 //	}
