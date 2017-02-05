@@ -19,8 +19,19 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = LoggerFactory.getLogger(SeasonDivisionImpl.class);
 	
+	@Id
+//	@ManyToOne(targetEntity=SeasonImpl.class, cascade={CascadeType.MERGE,CascadeType.PERSIST})
+//	@ManyToOne(targetEntity=SeasonImpl.class, mappedBy="season_division")
+	@ManyToOne(targetEntity=SeasonImpl.class)
+	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num", nullable=false, updatable=false)
 	private Season season;
+
+	@Id
+	@ManyToOne(targetEntity=DivisionImpl.class)
+	@JoinColumn(name = "div_id", referencedColumnName="div_id", nullable=false, updatable=false)
 	private Division division;
+
+	@Column(name = "div_pos")
 	private int divisionPosition;
 	
 	public SeasonDivisionImpl () {
@@ -34,27 +45,24 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 		this.divisionPosition = divisionPosition;
 	}
 	
-	@Id
+	
+	
+	
+	
 	@Override
-	//@ManyToOne(targetEntity=SeasonImpl.class)
-	@ManyToOne(targetEntity=SeasonImpl.class, cascade={CascadeType.MERGE,CascadeType.PERSIST})
-	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")
 	public Season getSeason() {
-		//log.info(this.toString() + " / Returning season from SeasonDivision: " + (this.season == null ? "NULL" : this.season.getSeasonNumber()) );
+		//log.info("#######################################################################" + this.toString() + " / Returning season from SeasonDivision: " + (this.season == null ? "NULL" : this.season.getSeasonNumber()) );
 		return this.season;
 	}
 
-	@Id
 	@Override
-	@ManyToOne(targetEntity=DivisionImpl.class)
-	@JoinColumn(name = "div_id", referencedColumnName="div_id")
 	public Division getDivision() {
 		//log.info("Returning division from SeasonDivision: " + (this.division == null ? "NULL" : this.division.getDivisionId() + " / " + this.division.getDivisionName()));
 		return this.division;
 	}
 
+	
 	@Override
-	@Column(name = "div_pos")
 	public int getDivisionPosition() {
 		return this.divisionPosition;
 	}
@@ -73,6 +81,9 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	public void setDivisionPosition(int divisionPosition) {
 		this.divisionPosition = divisionPosition;
 	}
+	
+	
+	
 	
 	@Override
 	public int compareTo(SeasonDivision compareTo) {

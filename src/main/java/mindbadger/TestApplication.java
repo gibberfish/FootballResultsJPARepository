@@ -23,14 +23,30 @@ public class TestApplication {
 	public CommandLineRunner demo(DivisionRepository divisionRepository, SeasonRepository seasonRepository) {
 		return (args) -> {
 			
+			log.error("************ STEP 1: Create new division *************");
+			
 			DivisionImpl division1 = new DivisionImpl("100", "Premier Fish");
 			log.info("Created new Division : " + division1.toString());
 			
 			DivisionImpl savedDivision = divisionRepository.save(division1);
 
+			log.info("division1 hashCode: " + division1.hashCode() + " / savedDivsion hashCode: " + savedDivision.hashCode());
+			if (division1 == savedDivision) {
+				log.info("The Division returned by save is the same as the one passed in");
+			}
+			if (division1.equals(savedDivision)) {
+				log.info("The Division returned by save is the same as the one passed in (using equals method)");
+			}
+
+			
+			
+			log.error("************ STEP 2: Find saved division *************");
+			
 			savedDivision = divisionRepository.findOne("100");
 			
 			log.info("Retrieved Division : " + savedDivision.toString());
+			
+			log.error("************ STEP 3: Fix division name *************");
 			
 			savedDivision.setDivisionName("Premier League");
 			savedDivision = divisionRepository.save(savedDivision);
@@ -38,29 +54,47 @@ public class TestApplication {
 			log.info("Re-retrieved Division : " + savedDivision.toString());
 			
 			
-			
+			log.error("************ STEP 4: Create new season *************");
 			
 			SeasonImpl season = new SeasonImpl (2003);
 			log.info("Created new Season : " + season.toString());
 			
-			SeasonImpl savedSeason = seasonRepository.save(season);
-			savedSeason = seasonRepository.findOne(2003);
+			SeasonImpl origSavedSeason = seasonRepository.save(season);
+			log.info("Original non-persisted Season Instance : " + System.identityHashCode(season));
+			log.info("Original Saved Season Instance : " + System.identityHashCode(origSavedSeason));
 			
-			log.info("Retrieved Season : " + savedSeason.toString());
+			log.error("************ STEP 5: Find saved season *************");
+			
+			SeasonImpl retrievedSeason = seasonRepository.findOne(2003);
+			
+			log.info("Retrieved Season : " + retrievedSeason.toString());
+			log.info("Retrieved Season Instance : " + System.identityHashCode(retrievedSeason));
+
+			log.info("season hashCode: " + season.hashCode() + " / retrieved Season hashCode: " + retrievedSeason.hashCode() + " / saved Season hashCode: " + origSavedSeason.hashCode());
+			if (season == retrievedSeason) {
+				log.info("The Season returned by save is the same as the one passed in");
+			}
+			if (season.equals(retrievedSeason)) {
+				log.info("The Season returned by save is the same as the one passed in (using equals method)");
+			}
 
 			
-			
+			log.error("************ STEP 6: Create new season division relationship *************");
 			
 			SeasonDivision seasonDivision = new SeasonDivisionImpl();
-			seasonDivision.setSeason(savedSeason);
+			seasonDivision.setSeason(origSavedSeason);
 			seasonDivision.setDivision(savedDivision);
 			seasonDivision.setDivisionPosition(1);
 			
-			savedSeason.getSeasonDivisions().add(seasonDivision);
+			retrievedSeason.getSeasonDivisions().add(seasonDivision);
 
-			log.info("Season with division attached : " + savedSeason.toString());
+			log.info("Season with division attached : " + retrievedSeason.toString());
+			log.info("Retrieved Season Instance : " + System.identityHashCode(retrievedSeason));
 			
-			seasonRepository.save(savedSeason);
+			log.error("************ STEP 7: Save the season with this new relationship *************");
+			
+			seasonRepository.flush();
+			seasonRepository.save(retrievedSeason);
 
 			
 			

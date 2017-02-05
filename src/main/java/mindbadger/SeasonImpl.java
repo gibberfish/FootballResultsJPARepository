@@ -15,7 +15,16 @@ import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 public class SeasonImpl implements Season, Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@Column(name = "ssn_num")
 	private int seasonNumber;
+
+	//@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, cascade={CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+	//@OneToMany(targetEntity=SeasonDivisionImpl.class, fetch = FetchType.EAGER, cascade={CascadeType.MERGE,CascadeType.PERSIST})
+	//@JoinColumn(name="ssn_num", insertable=false, updatable=false)
+//	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, fetch = FetchType.EAGER)
+//	@JoinColumn(name="ssn_num")
+	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
 	private Set<SeasonDivision> seasonDivisions; 
 	
 	public SeasonImpl () {
@@ -27,18 +36,12 @@ public class SeasonImpl implements Season, Serializable {
 		this.seasonDivisions = new HashSet<SeasonDivision> ();
 	}
 	
-	@Id
-	@Column(name = "ssn_num")
 	@Override
 	public int getSeasonNumber() {
 		return this.seasonNumber;
 	}
 
 	@Override
-	//@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, cascade={CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, fetch = FetchType.EAGER)
-	//@OneToMany(targetEntity=SeasonDivisionImpl.class, fetch = FetchType.EAGER, cascade={CascadeType.MERGE,CascadeType.PERSIST})
-	//@JoinColumn(name="ssn_num", insertable=false, updatable=false)
 	public Set<SeasonDivision> getSeasonDivisions() {
 		return this.seasonDivisions;
 	}

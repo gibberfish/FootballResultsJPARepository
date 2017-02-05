@@ -8,20 +8,7 @@ public class SeasonDivisionId implements Serializable {
 
 	private int season;
 	private String division;
-	
-	public int getSeason() {
-		return season;
-	}
-	public void setSeason(int season) {
-		this.season = season;
-	}
-	public String getDivision() {
-		return division;
-	}
-	public void setDivision(String division) {
-		this.division = division;
-	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(season, division);	
@@ -33,10 +20,28 @@ public class SeasonDivisionId implements Serializable {
 		SeasonDivisionId seasonDivsionId = (SeasonDivisionId) obj;
 		
 		boolean seasonEqual = (season == seasonDivsionId.getSeason());
-		boolean divisionEqual = Objects.equals(division, seasonDivsionId.getDivision());
+		//boolean divisionEqual = Objects.equals(division, seasonDivsionId.getDivision());
+		boolean divisionEqual = obj.equals(seasonDivsionId.getDivision());
 		
 		return (seasonEqual && divisionEqual);
 	}
 	
 	
+	
+	public int getSeason() {
+		return season;
+	}
+	
+	public String getDivision() {
+		return division;
+	}
+
+	public void setSeason(int season) {
+		this.season = season;
+	}
+	
+	public void setDivision(String division) {
+		this.division = division;
+	}
 }
+

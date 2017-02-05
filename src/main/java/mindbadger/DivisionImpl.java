@@ -1,14 +1,14 @@
 package mindbadger;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import mindbadger.footballresultsanalyser.domain.Division;
-import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 
 @Entity
 @Table(name = "division")
@@ -16,9 +16,14 @@ public class DivisionImpl implements Division, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+//	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "div_id")
 	private String id;
+
+	@Column(name = "div_name")
 	private String name;
-	private Set<SeasonDivision> seasonDivisions; 
+//	private Set<SeasonDivision> seasonDivisions; 
 	
 	protected DivisionImpl () {
 	}
@@ -29,9 +34,6 @@ public class DivisionImpl implements Division, Serializable {
 	}
 	
 	@Override
-	@Id
-//	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name = "div_id")
 	public String getDivisionId() {
 		return id;
 	}
@@ -42,7 +44,6 @@ public class DivisionImpl implements Division, Serializable {
 //	}
 
 	@Override
-	@Column(name = "div_name")
 	public String getDivisionName() {
 		return name;
 	}
