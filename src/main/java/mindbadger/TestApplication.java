@@ -124,14 +124,17 @@ public class TestApplication extends JpaBaseConfiguration {
 			//seasonRepository.flush();
 			seasonRepository.save(retrievedSeason);
 
+			DivisionImpl division2 = new DivisionImpl("101", "Championship");
+			divisionRepository.save(division2);
+
 			
+			SeasonDivision seasonDivision2 = new SeasonDivisionImpl();
+			seasonDivision2.setSeason(origSavedSeason);
+			seasonDivision2.setDivision(division2);
+			seasonDivision2.setDivisionPosition(2);
 			
-			
-//			log.info ("Season: " + season.getSeasonNumber() + " / " + season.getSeasonDivisions().size());
-//			
-//			SeasonDivision foundSeasonDivision = season.getSeasonDivisions().iterator().next();
-//			log.info ("SeasonDivision: " + foundSeasonDivision.getSeason().getSeasonNumber() + " / " + foundSeasonDivision.getDivision().getDivisionName() + " / " + foundSeasonDivision.getDivisionPosition());
-			
+			retrievedSeason.getSeasonDivisions().add(seasonDivision2);
+			seasonRepository.save(retrievedSeason);
 
 			
 			
