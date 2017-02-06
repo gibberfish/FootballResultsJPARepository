@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import mindbadger.footballresultsanalyser.domain.Division;
 import mindbadger.footballresultsanalyser.domain.Fixture;
@@ -48,6 +50,7 @@ public class FixtureImpl implements Fixture, Serializable {
 	}
 	
 	@Override
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fixture_date")
 	public Calendar getFixtureDate() {
 		return this.fixtureDate;

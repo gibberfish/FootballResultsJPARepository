@@ -1,20 +1,42 @@
 package mindbadger;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+
+import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
+import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
+import org.springframework.transaction.jta.JtaTransactionManager;
 
 import mindbadger.footballresultsanalyser.domain.Season;
 import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 
+@Configuration
+@ComponentScan
+@EnableAutoConfiguration
 @SpringBootApplication
-public class TestApplication {
+public class TestApplication extends JpaBaseConfiguration {
+
+	protected TestApplication(DataSource dataSource, JpaProperties properties,
+			ObjectProvider<JtaTransactionManager> jtaTransactionManagerProvider) {
+		super(dataSource, properties, jtaTransactionManagerProvider);
+		// TODO Auto-generated constructor stub
+	}
 
 	private static final Logger log = LoggerFactory.getLogger(TestApplication.class);
 	
@@ -130,6 +152,18 @@ public class TestApplication {
 //			log.info("");
 
 		};
+	}
+
+	@Override
+	protected AbstractJpaVendorAdapter createJpaVendorAdapter() {
+		EclipseLinkJpaVendorAdapter adapter = new EclipseLinkJpaVendorAdapter();
+		return adapter;
+	}
+
+	@Override
+	protected Map<String, Object> getVendorProperties() {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		return map;
 	}
 
 }
