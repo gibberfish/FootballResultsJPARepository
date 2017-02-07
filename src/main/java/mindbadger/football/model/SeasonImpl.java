@@ -62,7 +62,7 @@ public class SeasonImpl implements Season, Serializable {
 			
 		SeasonImpl seasonImplToCompare = (SeasonImpl) obj;
 		
-		return (seasonNumber == seasonImplToCompare.getSeasonNumber());
+		return (seasonNumber.equals(seasonImplToCompare.getSeasonNumber()));
 	}
 	
 	private String convertSeasonDivisionsToString () {

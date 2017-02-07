@@ -1,19 +1,23 @@
 package mindbadger.football.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import mindbadger.footballresultsanalyser.domain.Division;
 import mindbadger.footballresultsanalyser.domain.Season;
 import mindbadger.footballresultsanalyser.domain.SeasonDivision;
+import mindbadger.footballresultsanalyser.domain.SeasonDivisionTeam;
 
 @Entity
 @Table(name = "season_division")
@@ -42,7 +46,20 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 
 	@Column(name = "div_pos")
 	private int divisionPosition;
+
+	@OneToMany(mappedBy = "seasonDivisionId", targetEntity=SeasonDivisionTeamImpl.class, fetch = FetchType.EAGER, cascade=CascadeType.DETACH)
+	private Set<SeasonDivisionTeam> seasonDivisionTeams; 
 	
+	@Override
+	public Set<SeasonDivisionTeam> getSeasonDivisionTeams() {
+		return seasonDivisionTeams;
+	}
+	
+	@Override
+	public void setSeasonDivisionTeams(Set<SeasonDivisionTeam> seasonDivisionTeams) {
+		this.seasonDivisionTeams = seasonDivisionTeams;
+	}
+
 	@Override
 	public Season getSeason() {
 		return this.season;
