@@ -1,6 +1,7 @@
 package mindbadger.football.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +16,6 @@ import mindbadger.footballresultsanalyser.domain.Team;
 @Table(name = "team")
 public class TeamImpl implements Team, Serializable {
 	private static final long serialVersionUID = 1L;
-
-	private String id;
-	private String name;
-	private String shortName;
 	
 	public TeamImpl () {
 	}
@@ -27,29 +24,35 @@ public class TeamImpl implements Team, Serializable {
 		this.id = id;
 		this.name = name;
 	}
-
+	
 	public TeamImpl (String id, String name, String shortName) {
 		this.id = id;
 		this.name = name;
 		this.shortName = shortName;
 	}
 
-	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "team_id")
+	private String id;
+
+	@Column(name = "team_name")
+	private String name;
+	
+	@Column(name = "team_short_name")
+	private String shortName;
+
+	@Override
 	public String getTeamId() {
 		return id;
 	}
 
 	@Override
-	@Column(name = "team_name")
 	public String getTeamName() {
 		return name;
 	}
 
 	@Override
-	@Column(name = "team_short_name")
 	public String getTeamShortName() {
 		return shortName;
 	}
@@ -67,6 +70,25 @@ public class TeamImpl implements Team, Serializable {
 	@Override
 	public void setTeamShortName(String shortName) {
 		this.shortName = shortName;
+	}
+
+	@Override
+	public String toString() {
+		return "Team["+id+":"+name+"]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(toString());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof TeamImpl)) return false;
+		
+		TeamImpl teamImplToCompare = (TeamImpl) obj;
+		
+		return (toString().equals(teamImplToCompare.toString()));
 	}
 
 }

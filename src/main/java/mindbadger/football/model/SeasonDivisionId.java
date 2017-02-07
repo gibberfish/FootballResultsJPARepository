@@ -20,13 +20,10 @@ public class SeasonDivisionId implements Serializable {
 		SeasonDivisionId seasonDivsionId = (SeasonDivisionId) obj;
 		
 		boolean seasonEqual = (season == seasonDivsionId.getSeason());
-		//boolean divisionEqual = Objects.equals(division, seasonDivsionId.getDivision());
 		boolean divisionEqual = obj.equals(seasonDivsionId.getDivision());
 		
 		return (seasonEqual && divisionEqual);
 	}
-	
-	
 	
 	public Integer getSeason() {
 		return season;

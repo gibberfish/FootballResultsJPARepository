@@ -2,6 +2,7 @@ package mindbadger.football.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,68 +24,75 @@ import mindbadger.footballresultsanalyser.domain.Team;
 @Entity
 @Table(name = "fixture")
 public class FixtureImpl implements Fixture, Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	private Season season;
-	private String fixtureId;
-	private Calendar fixtureDate;
-	private Team homeTeam;
-	private Team awayTeam;
-	private Division division;
-	private Integer homeGoals;
-	private Integer awayGoals;
+	private static final long serialVersionUID = 832866330147762650L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "fixture_id")
+	private String fixtureId;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "fixture_date")
+	private Calendar fixtureDate;
+	
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=TeamImpl.class)
+	@JoinColumn(name = "home_team_id", referencedColumnName="team_id")
+	private Team homeTeam;
+
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=TeamImpl.class)
+	@JoinColumn(name = "away_team_id", referencedColumnName="team_id")
+	private Team awayTeam;
+
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=SeasonImpl.class)
+	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")
+	private Season season;
+
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=DivisionImpl.class)
+	@JoinColumn(name = "div_id", referencedColumnName="div_id")
+	private Division division;
+
+	@Column(name = "home_goals")
+	private Integer homeGoals;
+
+	@Column(name = "away_goals")
+	private Integer awayGoals;
+	
 	@Override
 	public String getFixtureId() {
 		return this.fixtureId;
 	}
 	
 	@Override
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=SeasonImpl.class)
-	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")
 	public Season getSeason() {
 		return this.season;
 	}
 	
 	@Override
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "fixture_date")
 	public Calendar getFixtureDate() {
 		return this.fixtureDate;
 	}
 	
 	@Override
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=TeamImpl.class)
-	@JoinColumn(name = "home_team_id", referencedColumnName="team_id")
 	public Team getHomeTeam() {
 		return this.homeTeam;
 	}
 	
 	@Override
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=TeamImpl.class)
-	@JoinColumn(name = "away_team_id", referencedColumnName="team_id")
 	public Team getAwayTeam() {
 		return this.awayTeam;
 	}
 	
 	@Override
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=DivisionImpl.class)
-	@JoinColumn(name = "div_id", referencedColumnName="div_id")
 	public Division getDivision() {
 		return this.division;
 	}
 	
 	@Override
-	@Column(name = "home_goals")
 	public Integer getHomeGoals() {
 		return this.homeGoals;
 	}
 	
 	@Override
-	@Column(name = "away_goals")
 	public Integer getAwayGoals() {
 		return this.awayGoals;
 	}
@@ -127,6 +135,25 @@ public class FixtureImpl implements Fixture, Serializable {
 	@Override
 	public void setSeason(Season season) {
 		this.season = season;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(fixtureId);
+	}
+
+	@Override
+	public String toString() {
+		return "Fixture[ssn:"+season+",hmTm:"+homeTeam+"awTm:"+awayTeam+"]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof DivisionImpl)) return false;
+		
+		DivisionImpl divisionImplToCompare = (DivisionImpl) obj;
+		
+		return (toString().equals(divisionImplToCompare.toString()));
 	}
 
 }

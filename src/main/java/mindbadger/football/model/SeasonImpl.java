@@ -14,13 +14,6 @@ import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 @Table(name = "season")
 public class SeasonImpl implements Season, Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name = "ssn_num")
-	private Integer seasonNumber;
-
-	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, fetch = FetchType.EAGER, cascade=CascadeType.DETACH)
-	private Set<SeasonDivision> seasonDivisions; 
 	
 	public SeasonImpl () {
 		this.seasonDivisions = new HashSet<SeasonDivision> ();
@@ -30,6 +23,13 @@ public class SeasonImpl implements Season, Serializable {
 		this.seasonNumber = seasonNumber;
 		this.seasonDivisions = new HashSet<SeasonDivision> ();
 	}
+
+	@Id
+	@Column(name = "ssn_num")
+	private Integer seasonNumber;
+
+	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, fetch = FetchType.EAGER, cascade=CascadeType.DETACH)
+	private Set<SeasonDivision> seasonDivisions; 
 	
 	@Override
 	public Integer getSeasonNumber() {
@@ -53,7 +53,6 @@ public class SeasonImpl implements Season, Serializable {
 
 	@Override
 	public int hashCode() {
-		//return Objects.hash(toString());	
 		return Objects.hash(seasonNumber);
 	}
 
@@ -63,7 +62,6 @@ public class SeasonImpl implements Season, Serializable {
 			
 		SeasonImpl seasonImplToCompare = (SeasonImpl) obj;
 		
-		//return (toString().equals(seasonImplToCompare.toString()));
 		return (seasonNumber == seasonImplToCompare.getSeasonNumber());
 	}
 	
@@ -77,7 +75,7 @@ public class SeasonImpl implements Season, Serializable {
 
 	@Override
 	public String toString() {
-		return "["+seasonNumber+"]"+convertSeasonDivisionsToString();
+		return "Season["+seasonNumber+"]"+convertSeasonDivisionsToString();
 	}
 }
 

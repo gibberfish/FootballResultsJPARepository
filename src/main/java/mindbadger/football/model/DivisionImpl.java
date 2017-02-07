@@ -13,16 +13,8 @@ import mindbadger.footballresultsanalyser.domain.Division;
 @Entity
 @Table(name = "division")
 public class DivisionImpl implements Division, Serializable {
+	private static final long serialVersionUID = -391877074618292394L;
 
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name = "div_id")
-	private String id;
-
-	@Column(name = "div_name")
-	private String name;
-	
 	protected DivisionImpl () {
 	}
 	
@@ -30,6 +22,13 @@ public class DivisionImpl implements Division, Serializable {
 		this.id = id; // This is not in publisher, as it's auto-generated
 		this.name = name;
 	}
+
+	@Id
+	@Column(name = "div_id")
+	private String id;
+
+	@Column(name = "div_name")
+	private String name;
 	
 	@Override
 	public String getDivisionId() {
@@ -53,7 +52,7 @@ public class DivisionImpl implements Division, Serializable {
 
 	@Override
 	public String toString() {
-		return "["+id+":"+name+"]";
+		return "Division["+id+":"+name+"]";
 	}
 
 	@Override

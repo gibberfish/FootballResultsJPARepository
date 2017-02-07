@@ -1,12 +1,15 @@
 package mindbadger.football.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-import javax.persistence.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import mindbadger.footballresultsanalyser.domain.Division;
 import mindbadger.footballresultsanalyser.domain.Season;
@@ -17,7 +20,15 @@ import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 @IdClass(SeasonDivisionId.class)
 public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = LoggerFactory.getLogger(SeasonDivisionImpl.class);
+	
+	public SeasonDivisionImpl () {
+	}
+	
+	public SeasonDivisionImpl (Season season, Division division, int divisionPosition) {
+		this.season = season;
+		this.division = division;
+		this.divisionPosition = divisionPosition;
+	}
 	
 	@Id
 	@ManyToOne(targetEntity=SeasonImpl.class, cascade=CascadeType.DETACH)
@@ -31,19 +42,6 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 
 	@Column(name = "div_pos")
 	private int divisionPosition;
-	
-	public SeasonDivisionImpl () {
-	}
-	
-	public SeasonDivisionImpl (Season season, Division division, int divisionPosition) {
-		this.season = season;
-		this.division = division;
-		this.divisionPosition = divisionPosition;
-	}
-	
-	
-	
-	
 	
 	@Override
 	public Season getSeason() {
@@ -76,12 +74,8 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 		this.divisionPosition = divisionPosition;
 	}
 	
-	
-	
-	
 	@Override
 	public int compareTo(SeasonDivision compareTo) {
-		//log.info("compareTo called on SeasonDivison");
 		//TODO This was copied from the couchbase dao code - consider an abstract superclass
 		if (compareTo.getSeason().getSeasonNumber() != this.getSeason().getSeasonNumber()) {
 			return this.getSeason().getSeasonNumber() - compareTo.getSeason().getSeasonNumber();
@@ -91,31 +85,4 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 			return this.getDivision().getDivisionName().compareTo(compareTo.getDivision().getDivisionName());
 		}
 	}
-
-//	@Override
-//	public boolean equals(Object obj) {
-//		//log.info("equals called on SeasonDivison");
-//		if (obj instanceof SeasonDivision) {
-//			SeasonDivision compareTo = (SeasonDivision) obj;
-//			Integer ssnNumToCompare = (compareTo.getSeason() == null ? null : compareTo.getSeason().getSeasonNumber());
-//			String divIdToCompare = (compareTo.getDivision() == null ? null : compareTo.getDivision().getDivisionId());
-//			
-//			Integer ssnNum = (season == null ? null : season.getSeasonNumber());
-//			String divId = (division == null ? null : division.getDivisionId());
-//			
-//			return (ssnNum != null && (ssnNumToCompare == ssnNum && divIdToCompare == divId));
-//			
-//		}
-//		return super.equals(obj);
-//	}
-//
-//	@Override
-//	public int hashCode() {
-//		//log.info("hashCode called on SeasonDivison");
-//		Integer ssnNum = (season == null ? null : season.getSeasonNumber());
-//		String divId = (division == null ? null : division.getDivisionId());
-//
-//		return Objects.hash(ssnNum, divId);
-//	}
-
 }
