@@ -23,12 +23,17 @@ import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
+import mindbadger.football.model.DivisionImpl;
+import mindbadger.football.model.SeasonDivisionImpl;
+import mindbadger.football.model.SeasonImpl;
+import mindbadger.football.repository.DivisionRepository;
+import mindbadger.football.repository.SeasonRepository;
 import mindbadger.footballresultsanalyser.domain.Season;
 import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 
-@Configuration
-@ComponentScan
-@EnableAutoConfiguration
+//@Configuration
+//@ComponentScan
+//@EnableAutoConfiguration
 @SpringBootApplication
 public class TestApplication extends JpaBaseConfiguration {
 

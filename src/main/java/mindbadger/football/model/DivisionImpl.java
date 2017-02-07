@@ -1,4 +1,4 @@
-package mindbadger;
+package mindbadger.football.model;
 
 import java.io.Serializable;
 import java.util.Objects;
