@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -26,49 +27,54 @@ import mindbadger.footballresultsanalyser.domain.Team;
 public class SeasonDivisionTeamImpl implements SeasonDivisionTeam, Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name="season")
-	private Integer season;
+//	@EmbeddedId
+//	public SeasonDivisionTeamId id;
 	
-	@Id
-	@Column(name="division")
-	private String division;
+//	@Id
+//	@Column(name="season")
+//	private Integer season;
+//	
+//	@Id
+//	@Column(name="division")
+//	private String division;
 
-	@MapsId("seasonDivisionId")
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=SeasonDivisionImpl.class, cascade=CascadeType.DETACH)
+	//@MapsId("seasonDivisionId")
+	
 	@JoinColumns({
 		@JoinColumn(name = "season", referencedColumnName="ssn_num"),
 		@JoinColumn(name = "division", referencedColumnName="div_id")
 	})
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=SeasonDivisionImpl.class, cascade=CascadeType.DETACH)
 	private SeasonDivision seasonDivision;
 	
 	@Id
+	//@MapsId("seasonDivisionTeamId")
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity=TeamImpl.class)
 	@JoinColumn(name = "team_id", referencedColumnName="team_id")
 	private Team team;
 	
-//	@Id
-//	@ManyToOne(fetch = FetchType.LAZY, targetEntity=SeasonImpl.class)
-//	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")
-//	public Season getSeason () {
-//		return this.seasonDivision.getSeason();
-//	}
-//
-//	@Id
-//	@ManyToOne(fetch = FetchType.LAZY, targetEntity=DivisionImpl.class)
-//	@JoinColumn(name = "div_id", referencedColumnName="div_id")
-//	public Division getDivision () {
-//		return this.seasonDivision.getDivision();
-//	}
-//	
-//	
-//	public void setSeason(Season season) {
-//		this.seasonDivision.setSeason(season);
-//	}
-//	
-//	public void setDivision (Division division) {
-//		this.seasonDivision.setDivision(division);
-//	}
+	@Id
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=SeasonImpl.class)
+	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")
+	public Season getSeason () {
+		return this.seasonDivision.getSeason();
+	}
+
+	@Id
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=DivisionImpl.class)
+	@JoinColumn(name = "div_id", referencedColumnName="div_id")
+	public Division getDivision () {
+		return this.seasonDivision.getDivision();
+	}
+	
+	
+	public void setSeason(Season season) {
+		this.seasonDivision.setSeason(season);
+	}
+	
+	public void setDivision (Division division) {
+		this.seasonDivision.setDivision(division);
+	}
 	
 	@Override
 	public SeasonDivision getSeasonDivision() {

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import mindbadger.footballresultsanalyser.domain.Division;
 import mindbadger.footballresultsanalyser.domain.Season;
@@ -24,6 +26,9 @@ import mindbadger.footballresultsanalyser.domain.SeasonDivisionTeam;
 @IdClass(SeasonDivisionId.class)
 public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	private static final long serialVersionUID = 1L;
+	
+//	@EmbeddedId
+//	public SeasonDivisionId seasonDivisionId;
 	
 	public SeasonDivisionImpl () {
 	}
@@ -47,7 +52,8 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	@Column(name = "div_pos")
 	private int divisionPosition;
 
-	@OneToMany(mappedBy = "seasonDivisionId", targetEntity=SeasonDivisionTeamImpl.class, fetch = FetchType.EAGER, cascade=CascadeType.DETACH)
+	@Transient
+	//@OneToMany(mappedBy = "seasonDivisionId", targetEntity=SeasonDivisionTeamImpl.class, fetch = FetchType.EAGER, cascade=CascadeType.DETACH)
 	private Set<SeasonDivisionTeam> seasonDivisionTeams; 
 	
 	@Override

@@ -3,10 +3,17 @@ package mindbadger.football.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+//@Embeddable
 public class SeasonDivisionId implements Serializable {
 	private static final long serialVersionUID = 8013910648038828574L;
 
+//	@Column(name="season")
 	private Integer season;
+	
+//	@Column(name="division")
 	private String division;
 
 	@Override
@@ -19,10 +26,10 @@ public class SeasonDivisionId implements Serializable {
 		if (! (obj instanceof SeasonDivisionId)) return false;
 		SeasonDivisionId seasonDivsionId = (SeasonDivisionId) obj;
 		
-		boolean seasonEqual = (season == seasonDivsionId.getSeason());
-		boolean divisionEqual = division.equals(seasonDivsionId.getDivision());
+		boolean seasonIdEqual = (season == seasonDivsionId.getSeason());
+		boolean divisionIdEqual = division.equals(seasonDivsionId.getDivision());
 		
-		return (seasonEqual && divisionEqual);
+		return (seasonIdEqual && divisionIdEqual);
 	}
 	
 	public Integer getSeason() {
