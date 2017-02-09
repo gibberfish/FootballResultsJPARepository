@@ -3,17 +3,10 @@ package mindbadger.football.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
-//@Embeddable
 public class SeasonDivisionId implements Serializable {
 	private static final long serialVersionUID = 8013910648038828574L;
 
-//	@Column(name="season")
 	private Integer season;
-	
-//	@Column(name="division")
 	private String division;
 
 	@Override

@@ -28,7 +28,7 @@ public class SeasonImpl implements Season, Serializable {
 	@Column(name = "ssn_num")
 	private Integer seasonNumber;
 
-	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, fetch = FetchType.EAGER, cascade=CascadeType.DETACH)
+	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, fetch = FetchType.LAZY, cascade=CascadeType.DETACH)
 	private Set<SeasonDivision> seasonDivisions; 
 	
 	@Override

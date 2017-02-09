@@ -3,8 +3,6 @@ package mindbadger.football.model;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -12,69 +10,30 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 
-import mindbadger.footballresultsanalyser.domain.Division;
-import mindbadger.footballresultsanalyser.domain.Season;
 import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 import mindbadger.footballresultsanalyser.domain.SeasonDivisionTeam;
 import mindbadger.footballresultsanalyser.domain.Team;
 
 @Entity
 @Table(name = "season_division_team")
-@IdClass(SeasonDivisionTeamId.class)
+@IdClass (SeasonDivisionTeamId.class)
 public class SeasonDivisionTeamImpl implements SeasonDivisionTeam, Serializable {
 	private static final long serialVersionUID = 1L;
 
-//	@EmbeddedId
-//	public SeasonDivisionTeamId id;
-	
-//	@Id
-//	@Column(name="season")
-//	private Integer season;
-//	
-//	@Id
-//	@Column(name="division")
-//	private String division;
-
-	//@MapsId("seasonDivisionId")
-	
+	@Id
 	@JoinColumns({
-		@JoinColumn(name = "season", referencedColumnName="ssn_num"),
-		@JoinColumn(name = "division", referencedColumnName="div_id")
+		@JoinColumn(name="ssn_num", referencedColumnName="ssn_num"),
+		@JoinColumn(name="div_id", referencedColumnName="div_id")
 	})
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=SeasonDivisionImpl.class, cascade=CascadeType.DETACH)
+	@ManyToOne(targetEntity=SeasonDivisionImpl.class, cascade=CascadeType.DETACH)
 	private SeasonDivision seasonDivision;
 	
 	@Id
-	//@MapsId("seasonDivisionTeamId")
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=TeamImpl.class)
 	@JoinColumn(name = "team_id", referencedColumnName="team_id")
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=TeamImpl.class)
 	private Team team;
-	
-	@Id
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=SeasonImpl.class)
-	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")
-	public Season getSeason () {
-		return this.seasonDivision.getSeason();
-	}
-
-	@Id
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=DivisionImpl.class)
-	@JoinColumn(name = "div_id", referencedColumnName="div_id")
-	public Division getDivision () {
-		return this.seasonDivision.getDivision();
-	}
-	
-	
-	public void setSeason(Season season) {
-		this.seasonDivision.setSeason(season);
-	}
-	
-	public void setDivision (Division division) {
-		this.seasonDivision.setDivision(division);
-	}
 	
 	@Override
 	public SeasonDivision getSeasonDivision() {

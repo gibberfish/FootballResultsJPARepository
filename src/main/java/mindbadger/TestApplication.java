@@ -7,33 +7,33 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.eclipse.persistence.config.BatchWriting;
+import org.eclipse.persistence.config.PersistenceUnitProperties;
+import org.eclipse.persistence.logging.SessionLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
 import mindbadger.football.model.DivisionImpl;
 import mindbadger.football.model.SeasonDivisionImpl;
+import mindbadger.football.model.SeasonDivisionTeamImpl;
 import mindbadger.football.model.SeasonImpl;
+import mindbadger.football.model.TeamImpl;
 import mindbadger.football.repository.DivisionRepository;
 import mindbadger.football.repository.SeasonRepository;
-import mindbadger.footballresultsanalyser.domain.Season;
+import mindbadger.football.repository.TeamRepository;
 import mindbadger.footballresultsanalyser.domain.SeasonDivision;
+import mindbadger.footballresultsanalyser.domain.SeasonDivisionTeam;
 
-//@Configuration
-//@ComponentScan
-//@EnableAutoConfiguration
 @SpringBootApplication
 public class TestApplication extends JpaBaseConfiguration {
 
@@ -50,7 +50,7 @@ public class TestApplication extends JpaBaseConfiguration {
 	}
 
 	@Bean
-	public CommandLineRunner demo(DivisionRepository divisionRepository, SeasonRepository seasonRepository) {
+	public CommandLineRunner demo(DivisionRepository divisionRepository, SeasonRepository seasonRepository, TeamRepository teamRepository) {
 		return (args) -> {
 			
 			log.error("************ STEP 1: Create new division *************");
@@ -83,6 +83,15 @@ public class TestApplication extends JpaBaseConfiguration {
 			
 			log.info("Re-retrieved Division : " + savedDivision.toString());
 			
+			log.error("************ STEP 3b: Create new teams *************");
+			
+			TeamImpl team1 = new TeamImpl ("200", "Portsmouth");
+			TeamImpl team2 = new TeamImpl ("201", "Arsenal");
+			
+			teamRepository.save(team1);
+			teamRepository.save(team2);
+			
+
 			
 			log.error("************ STEP 4: Create new season *************");
 			
@@ -138,26 +147,25 @@ public class TestApplication extends JpaBaseConfiguration {
 			seasonDivision2.setDivision(division2);
 			seasonDivision2.setDivisionPosition(2);
 			
+			retrievedSeason = seasonRepository.save(retrievedSeason);
+			
+			SeasonDivisionTeam seasonDivisionTeam1 = new SeasonDivisionTeamImpl();
+			seasonDivisionTeam1.setSeasonDivision(seasonDivision2);
+			seasonDivisionTeam1.setTeam(team1);
+
+			seasonDivision2.getSeasonDivisionTeams().add(seasonDivisionTeam1);
+			
 			retrievedSeason.getSeasonDivisions().add(seasonDivision2);
 			seasonRepository.save(retrievedSeason);
 
 			
 			
-			//season.getDivsionsInSeason().
 			
-			// fetch all customers
-//			log.info("Customers found with findAll():");
-//			log.info("-------------------------------");
-//			for (DivisionImpl division : divisionRepository.findAll()) {
-//				log.info(division.toString());
-//			}
-//			log.info("");
-//
-//			// fetch an individual customer by ID
-//			DivisionImpl division = divisionRepository.findOne("1");
-//			log.info(division.getDivisionId());
-//			log.info(division.getDivisionName());
-//			log.info("");
+			
+			
+			
+			
+
 
 		};
 	}
@@ -171,7 +179,8 @@ public class TestApplication extends JpaBaseConfiguration {
 	@Override
 	protected Map<String, Object> getVendorProperties() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put(PersistenceUnitProperties.BATCH_WRITING, BatchWriting.JDBC);
+        map.put(PersistenceUnitProperties.LOGGING_LEVEL, SessionLog.FINE_LABEL);
 		return map;
 	}
-
 }

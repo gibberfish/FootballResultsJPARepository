@@ -1,11 +1,12 @@
 package mindbadger.football.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -14,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import mindbadger.footballresultsanalyser.domain.Division;
 import mindbadger.footballresultsanalyser.domain.Season;
@@ -23,22 +23,21 @@ import mindbadger.footballresultsanalyser.domain.SeasonDivisionTeam;
 
 @Entity
 @Table(name = "season_division")
-@IdClass(SeasonDivisionId.class)
+@IdClass (SeasonDivisionId.class)
 public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	private static final long serialVersionUID = 1L;
 	
-//	@EmbeddedId
-//	public SeasonDivisionId seasonDivisionId;
-	
 	public SeasonDivisionImpl () {
+		seasonDivisionTeams = new HashSet<SeasonDivisionTeam> ();
 	}
 	
 	public SeasonDivisionImpl (Season season, Division division, int divisionPosition) {
+		seasonDivisionTeams = new HashSet<SeasonDivisionTeam> ();
 		this.season = season;
 		this.division = division;
 		this.divisionPosition = divisionPosition;
 	}
-	
+
 	@Id
 	@ManyToOne(targetEntity=SeasonImpl.class, cascade=CascadeType.DETACH)
 	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")
@@ -52,8 +51,8 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	@Column(name = "div_pos")
 	private int divisionPosition;
 
-	@Transient
-	//@OneToMany(mappedBy = "seasonDivisionId", targetEntity=SeasonDivisionTeamImpl.class, fetch = FetchType.EAGER, cascade=CascadeType.DETACH)
+	//@Transient
+	@OneToMany(mappedBy = "seasonDivision", targetEntity=SeasonDivisionTeamImpl.class, fetch = FetchType.LAZY, cascade=CascadeType.DETACH)
 	private Set<SeasonDivisionTeam> seasonDivisionTeams; 
 	
 	@Override
@@ -96,6 +95,23 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	public void setDivisionPosition(int divisionPosition) {
 		this.divisionPosition = divisionPosition;
 	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(season, division);	
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (! (obj instanceof SeasonDivisionImpl)) return false;
+		SeasonDivisionImpl seasonDivsion = (SeasonDivisionImpl) obj;
+
+		boolean seasonIdEqual = (season == seasonDivsion.getSeason());
+		boolean divisionIdEqual = division.equals(seasonDivsion.getDivision());
+		
+		return (seasonIdEqual && divisionIdEqual);
+	}
+
 	
 	@Override
 	public int compareTo(SeasonDivision compareTo) {
