@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `fixture` (
   `ssn_num` int(10) NOT NULL,
   `home_team_id` int(10) NOT NULL,
   `away_team_id` int(10) NOT NULL,
-  `fixture_date` date NOT NULL,
+  `fixture_date` date DEFAULT NULL,
   `div_id` int(10) DEFAULT NULL,
   `home_goals` tinyint(2) DEFAULT NULL,
   `away_goals` tinyint(2) DEFAULT NULL,

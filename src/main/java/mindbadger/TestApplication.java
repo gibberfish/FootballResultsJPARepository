@@ -1,47 +1,31 @@
 package mindbadger;
 
-import java.util.HashMap;
+import java.util.Calendar;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-import javax.sql.DataSource;
-
-import org.eclipse.persistence.config.BatchWriting;
-import org.eclipse.persistence.config.PersistenceUnitProperties;
-import org.eclipse.persistence.logging.SessionLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
-import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
-import org.springframework.transaction.jta.JtaTransactionManager;
 
 import mindbadger.football.model.DivisionImpl;
+import mindbadger.football.model.FixtureImpl;
 import mindbadger.football.model.SeasonDivisionImpl;
 import mindbadger.football.model.SeasonDivisionTeamImpl;
 import mindbadger.football.model.SeasonImpl;
 import mindbadger.football.model.TeamImpl;
 import mindbadger.football.repository.DivisionRepository;
+import mindbadger.football.repository.FixtureRepository;
 import mindbadger.football.repository.SeasonRepository;
 import mindbadger.football.repository.TeamRepository;
 import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 import mindbadger.footballresultsanalyser.domain.SeasonDivisionTeam;
 
 @SpringBootApplication
-public class TestApplication extends JpaBaseConfiguration {
-
-	protected TestApplication(DataSource dataSource, JpaProperties properties,
-			ObjectProvider<JtaTransactionManager> jtaTransactionManagerProvider) {
-		super(dataSource, properties, jtaTransactionManagerProvider);
-		// TODO Auto-generated constructor stub
-	}
+public class TestApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(TestApplication.class);
 	
@@ -50,7 +34,7 @@ public class TestApplication extends JpaBaseConfiguration {
 	}
 
 	@Bean
-	public CommandLineRunner demo(DivisionRepository divisionRepository, SeasonRepository seasonRepository, TeamRepository teamRepository) {
+	public CommandLineRunner demo(DivisionRepository divisionRepository, SeasonRepository seasonRepository, TeamRepository teamRepository, FixtureRepository fixtureRepository) {
 		return (args) -> {
 			
 			log.error("************ STEP 1: Create new division *************");
@@ -158,29 +142,22 @@ public class TestApplication extends JpaBaseConfiguration {
 			retrievedSeason.getSeasonDivisions().add(seasonDivision2);
 			seasonRepository.save(retrievedSeason);
 
+			log.error("************ STEP 8: Create a fixture *************");
 			
+			FixtureImpl fixture = new FixtureImpl ();
+			fixture.setSeason(retrievedSeason);
+			fixture.setHomeTeam(team1);
+			fixture.setAwayTeam(team2);
 			
+			fixture = fixtureRepository.save(fixture);
 			
+			fixture.setDivision(savedDivision);
+			fixture.setFixtureDate(Calendar.getInstance());
+			fixture.setHomeGoals(2);
+			fixture.setAwayGoals(1);
 			
+			fixture = fixtureRepository.save(fixture);
 			
-			
-			
-
-
 		};
-	}
-
-	@Override
-	protected AbstractJpaVendorAdapter createJpaVendorAdapter() {
-		EclipseLinkJpaVendorAdapter adapter = new EclipseLinkJpaVendorAdapter();
-		return adapter;
-	}
-
-	@Override
-	protected Map<String, Object> getVendorProperties() {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put(PersistenceUnitProperties.BATCH_WRITING, BatchWriting.JDBC);
-        map.put(PersistenceUnitProperties.LOGGING_LEVEL, SessionLog.FINE_LABEL);
-		return map;
 	}
 }

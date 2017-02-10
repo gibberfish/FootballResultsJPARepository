@@ -144,16 +144,19 @@ public class FixtureImpl implements Fixture, Serializable {
 
 	@Override
 	public String toString() {
-		return "Fixture[ssn:"+season+",hmTm:"+homeTeam+"awTm:"+awayTeam+"]";
+		Integer ssnNum = (season == null ? null : season.getSeasonNumber());
+		String hmTeam = (homeTeam == null ? "" : homeTeam.getTeamId());
+		String awTeam = (awayTeam == null ? "" : awayTeam.getTeamId());
+		return "Fixture[ssn:"+ssnNum+",hmTm:"+hmTeam+",awTm:"+awTeam+"]";
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof DivisionImpl)) return false;
+		if (!(obj instanceof FixtureImpl)) return false;
 		
-		DivisionImpl divisionImplToCompare = (DivisionImpl) obj;
+		FixtureImpl fixtureImplToCompare = (FixtureImpl) obj;
 		
-		return (toString().equals(divisionImplToCompare.toString()));
+		return (toString().equals(fixtureImplToCompare.toString()));
 	}
 
 }
