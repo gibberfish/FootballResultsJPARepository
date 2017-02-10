@@ -24,7 +24,7 @@ import mindbadger.football.repository.TeamRepository;
 import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 import mindbadger.footballresultsanalyser.domain.SeasonDivisionTeam;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class TestApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(TestApplication.class);
