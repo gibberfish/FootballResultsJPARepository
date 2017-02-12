@@ -1,4 +1,4 @@
-package mindbadger.football.model;
+package mindbadger.footballresultsanalyser.domain;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import mindbadger.footballresultsanalyser.domain.Division;
+import mindbadger.footballresultsanalyser.domain.FixtureImpl;
 import mindbadger.footballresultsanalyser.domain.Season;
 import mindbadger.footballresultsanalyser.domain.Team;
 

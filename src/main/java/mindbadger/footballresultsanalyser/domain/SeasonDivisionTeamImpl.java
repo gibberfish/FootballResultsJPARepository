@@ -1,4 +1,4 @@
-package mindbadger.football.model;
+package mindbadger.footballresultsanalyser.domain;
 
 import java.io.Serializable;
 
@@ -27,7 +27,7 @@ public class SeasonDivisionTeamImpl implements SeasonDivisionTeam, Serializable 
 		@JoinColumn(name="ssn_num", referencedColumnName="ssn_num"),
 		@JoinColumn(name="div_id", referencedColumnName="div_id")
 	})
-	@ManyToOne(targetEntity=SeasonDivisionImpl.class, cascade=CascadeType.DETACH)
+	@ManyToOne(targetEntity=SeasonDivisionImpl.class)//, cascade=CascadeType.DETACH)
 	private SeasonDivision seasonDivision;
 	
 	@Id

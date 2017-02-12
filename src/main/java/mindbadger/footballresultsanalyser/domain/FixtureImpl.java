@@ -1,4 +1,4 @@
-package mindbadger.football.model;
+package mindbadger.footballresultsanalyser.domain;
 
 import java.io.Serializable;
 import java.util.Calendar;

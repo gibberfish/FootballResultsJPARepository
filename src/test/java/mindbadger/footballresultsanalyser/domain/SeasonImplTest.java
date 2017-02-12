@@ -1,4 +1,4 @@
-package mindbadger.football.model;
+package mindbadger.footballresultsanalyser.domain;
 
 import static org.mockito.Mockito.*;
 
@@ -11,7 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
 
+import mindbadger.footballresultsanalyser.domain.DivisionImpl;
 import mindbadger.footballresultsanalyser.domain.SeasonDivision;
+import mindbadger.footballresultsanalyser.domain.SeasonDivisionImpl;
+import mindbadger.footballresultsanalyser.domain.SeasonImpl;
 
 public class SeasonImplTest {
 	SeasonImpl objectUnderTest;

@@ -1,4 +1,4 @@
-package mindbadger.football.model;
+package mindbadger.footballresultsanalyser.domain;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -39,12 +39,12 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	}
 
 	@Id
-	@ManyToOne(targetEntity=SeasonImpl.class, cascade=CascadeType.DETACH)
+	@ManyToOne(targetEntity=SeasonImpl.class)
 	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")
 	private Season season;
 
 	@Id
-	@ManyToOne(targetEntity=DivisionImpl.class, cascade=CascadeType.DETACH)
+	@ManyToOne(targetEntity=DivisionImpl.class)
 	@JoinColumn(name = "div_id", referencedColumnName="div_id")
 	private Division division;
 
@@ -52,7 +52,7 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	private int divisionPosition;
 
 	//@Transient
-	@OneToMany(mappedBy = "seasonDivision", targetEntity=SeasonDivisionTeamImpl.class, fetch = FetchType.LAZY, cascade=CascadeType.DETACH)
+	@OneToMany(mappedBy = "seasonDivision", targetEntity=SeasonDivisionTeamImpl.class, fetch = FetchType.LAZY, orphanRemoval=true)
 	private Set<SeasonDivisionTeam> seasonDivisionTeams; 
 	
 	@Override

@@ -1,9 +1,11 @@
-package mindbadger.football.model;
+package mindbadger.footballresultsanalyser.domain;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import mindbadger.footballresultsanalyser.domain.DivisionImpl;
 
 public class DivisionImplTest {
 	DivisionImpl objectUnderTest;

@@ -1,4 +1,4 @@
-package mindbadger.football.model;
+package mindbadger.footballresultsanalyser.domain;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -15,7 +15,7 @@ import mindbadger.footballresultsanalyser.domain.Division;
 public class DivisionImpl implements Division, Serializable {
 	private static final long serialVersionUID = -391877074618292394L;
 
-	protected DivisionImpl () {
+	public DivisionImpl () {
 	}
 	
 	public DivisionImpl (String id, String name) {
