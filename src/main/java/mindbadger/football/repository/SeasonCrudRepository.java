@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import mindbadger.footballresultsanalyser.domain.SeasonImpl;
 
-public interface SeasonRepository extends CrudRepository<SeasonImpl, Integer>, JpaRepository<SeasonImpl, Integer>{
+public interface SeasonCrudRepository extends CrudRepository<SeasonImpl, Integer>, JpaRepository<SeasonImpl, Integer>{
 
 }

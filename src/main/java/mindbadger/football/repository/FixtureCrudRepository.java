@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import mindbadger.footballresultsanalyser.domain.FixtureImpl;
 
-public interface FixtureRepository extends CrudRepository<FixtureImpl, Integer>, JpaRepository<FixtureImpl, Integer> {
+public interface FixtureCrudRepository extends CrudRepository<FixtureImpl, String>, JpaRepository<FixtureImpl, String> {
 
 }

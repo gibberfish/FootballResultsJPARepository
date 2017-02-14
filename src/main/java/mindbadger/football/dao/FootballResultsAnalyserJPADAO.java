@@ -7,10 +7,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mindbadger.football.repository.DivisionRepository;
-import mindbadger.football.repository.FixtureRepository;
-import mindbadger.football.repository.SeasonRepository;
-import mindbadger.football.repository.TeamRepository;
+import mindbadger.football.repository.DivisionCrudRepository;
+import mindbadger.football.repository.FixtureCrudRepository;
+import mindbadger.football.repository.SeasonCrudRepository;
+import mindbadger.football.repository.TeamCrudRepository;
 import mindbadger.footballresultsanalyser.dao.FootballResultsAnalyserDAO;
 import mindbadger.footballresultsanalyser.domain.Division;
 import mindbadger.footballresultsanalyser.domain.Fixture;
@@ -23,16 +23,16 @@ import mindbadger.footballresultsanalyser.domain.Team;
 public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO {
 
 	@Autowired
-	private DivisionRepository divisionRepository;
+	private DivisionCrudRepository divisionRepository;
 	
 	@Autowired
-	private SeasonRepository seasonRepository;
+	private SeasonCrudRepository seasonRepository;
 	
 	@Autowired
-	private TeamRepository teamRepository;
+	private TeamCrudRepository teamRepository;
 	
 	@Autowired
-	private FixtureRepository fixtureRepository;
+	private FixtureCrudRepository fixtureRepository;
 	
 	@Override
 	public Division addDivision(String arg0) {
