@@ -7,74 +7,111 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mindbadger.football.repository.DivisionCrudRepository;
-import mindbadger.football.repository.FixtureCrudRepository;
-import mindbadger.football.repository.SeasonCrudRepository;
-import mindbadger.football.repository.TeamCrudRepository;
 import mindbadger.footballresultsanalyser.dao.FootballResultsAnalyserDAO;
 import mindbadger.footballresultsanalyser.domain.Division;
+import mindbadger.footballresultsanalyser.domain.DomainObjectFactory;
 import mindbadger.footballresultsanalyser.domain.Fixture;
 import mindbadger.footballresultsanalyser.domain.Season;
 import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 import mindbadger.footballresultsanalyser.domain.SeasonDivisionTeam;
 import mindbadger.footballresultsanalyser.domain.Team;
+import mindbadger.footballresultsanalyser.repository.DivisionRepository;
+import mindbadger.footballresultsanalyser.repository.FixtureRepository;
+import mindbadger.footballresultsanalyser.repository.SeasonRepository;
+import mindbadger.footballresultsanalyser.repository.TeamRepository;
 
 @Component
 public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO {
 
 	@Autowired
-	private DivisionCrudRepository divisionRepository;
+	private DivisionRepository divisionRepository;
 	
 	@Autowired
-	private SeasonCrudRepository seasonRepository;
+	private SeasonRepository seasonRepository;
 	
 	@Autowired
-	private TeamCrudRepository teamRepository;
+	private TeamRepository teamRepository;
 	
 	@Autowired
-	private FixtureCrudRepository fixtureRepository;
+	private FixtureRepository fixtureRepository;
+	
+	@Autowired
+	private DomainObjectFactory domainObjectFactory;
 	
 	@Override
-	public Division addDivision(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public Division addDivision(String name) {
+		Division division = domainObjectFactory.createDivision(name);
+		
+		division = divisionRepository.save(division);
+		
+		return division;
 	}
 
 	@Override
-	public Fixture addFixture(Season arg0, Calendar arg1, Division arg2, Team arg3, Team arg4, Integer arg5,
-			Integer arg6) {
-		// TODO Auto-generated method stub
-		return null;
+	public Fixture addFixture(Season season, Calendar fixtureDate, Division division, Team homeTeam, Team awayTeam, Integer homeGoals,
+			Integer awayGoals) {
+		
+		Fixture fixture = domainObjectFactory.createFixture(season, homeTeam, awayTeam);
+		
+		fixture.setDivision(division);
+		fixture.setFixtureDate(fixtureDate);
+		if (homeGoals != null) {
+			fixture.setHomeGoals(homeGoals);
+		}
+		if (awayGoals != null) {
+			fixture.setAwayGoals(awayGoals);
+		}
+
+		fixture = fixtureRepository.save(fixture);
+		
+		return fixture;
 	}
 
 	@Override
-	public Season addSeason(Integer arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public Season addSeason(Integer seasonNumber) {
+		Season season = domainObjectFactory.createSeason(seasonNumber);
+		
+		season = seasonRepository.save(season);
+		
+		return season;
 	}
 
 	@Override
-	public SeasonDivision addSeasonDivision(Season arg0, Division arg1, int arg2) {
-		// TODO Auto-generated method stub
-		return null;
+	public SeasonDivision addSeasonDivision(Season season, Division division, int position) {
+		SeasonDivision seasonDivision = domainObjectFactory.createSeasonDivision(season, division, position);
+		
+		season.getSeasonDivisions().add(seasonDivision);
+		
+		seasonRepository.save(season);
+
+		return seasonDivision;
 	}
 
 	@Override
-	public SeasonDivisionTeam addSeasonDivisionTeam(SeasonDivision arg0, Team arg1) {
-		// TODO Auto-generated method stub
-		return null;
+	public SeasonDivisionTeam addSeasonDivisionTeam(SeasonDivision seasonDivision, Team team) {
+		SeasonDivisionTeam seasonDivisionTeam = domainObjectFactory.createSeasonDivisionTeam(seasonDivision, team);
+		
+		seasonDivision.getSeasonDivisionTeams().add(seasonDivisionTeam);
+		
+		Season season = seasonDivision.getSeason();
+		
+		seasonRepository.save(season);
+		
+		return seasonDivisionTeam;
 	}
 
 	@Override
-	public Team addTeam(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public Team addTeam(String name) {
+		Team team = domainObjectFactory.createTeam(name);
+		
+		team = teamRepository.save(team);
+
+		return team;
 	}
 
 	@Override
 	public void closeSession() {
-		// TODO Auto-generated method stub
-
+		// Not required for This implementation
 	}
 
 	@Override
@@ -169,7 +206,7 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 
 	@Override
 	public void startSession() {
-		// TODO Auto-generated method stub
+		// Not required for This implementation
 
 	}
 
