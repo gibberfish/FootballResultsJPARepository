@@ -1,5 +1,9 @@
 package mindbadger.football.repository;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,5 +29,20 @@ public class DivisionRepositoryImpl implements DivisionRepository {
 	@Override
 	public Division save(Division division) {
 		return divisionCrudRepository.save((DivisionImpl)division);
+	}
+
+	@Override
+	public Iterable<Division> findAll() {
+		Iterable<DivisionImpl> allDivisionImpls = divisionCrudRepository.findAll();
+		Set<Division> allDivisions = new HashSet<Division> ();
+		
+		Iterator<DivisionImpl> iterator = allDivisionImpls.iterator();
+		
+		while (iterator.hasNext()) {
+			DivisionImpl divisionImpl = iterator.next();
+			allDivisions.add(divisionImpl);
+		}
+		
+		return allDivisions;
 	}
 }
