@@ -1,4 +1,4 @@
-package mindbadger.football.jpa.configuration;
+package mindbadger.configuration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,21 +9,34 @@ import org.eclipse.persistence.config.BatchWriting;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.persistence.logging.SessionLog;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
+import mindbadger.football.dao.FootballResultsAnalyserJPADAO;
+import mindbadger.footballresultsanalyser.dao.FootballResultsAnalyserDAO;
+
 @Configuration
 @ComponentScan 
 @EnableAutoConfiguration 
-public class FootballJpaConfiguration extends JpaBaseConfiguration {
+public class RepositoryConfiguration extends JpaBaseConfiguration {
 
-	protected FootballJpaConfiguration(DataSource dataSource, JpaProperties properties,
+//	@Autowired
+//	FootballResultsAnalyserDAO dao;
+//	
+//	@Bean
+//	FootballResultsAnalyserDAO dao () {
+//		dao = new FootballResultsAnalyserJPADAO();
+//		return dao;
+//	}
+	protected RepositoryConfiguration(DataSource dataSource, JpaProperties properties,
 			ObjectProvider<JtaTransactionManager> jtaTransactionManagerProvider) {
 		super(dataSource, properties, jtaTransactionManagerProvider);
 	}
