@@ -38,6 +38,17 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 	@Autowired
 	private DomainObjectFactory domainObjectFactory;
 	
+	
+	@Override
+	public void closeSession() {
+		// Not required for This implementation
+	}
+	
+	@Override
+	public void startSession() {
+		// Not required for This implementation
+	}
+	
 	@Override
 	public Division addDivision(String name) {
 		Division division = domainObjectFactory.createDivision(name);
@@ -108,11 +119,32 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 
 		return team;
 	}
-
+	
 	@Override
-	public void closeSession() {
-		// Not required for This implementation
+	public Division getDivision(String id) {
+		return divisionRepository.findOne(id);
 	}
+	
+	@Override
+	public Fixture getFixture(String id) {
+		return fixtureRepository.findOne(id);
+	}
+	
+	@Override
+	public Season getSeason(Integer seasonNumber) {
+		return seasonRepository.findOne(seasonNumber);
+	}
+	
+	@Override
+	public Team getTeam(String id) {
+		return teamRepository.findOne(id);
+	}
+
+	
+
+	
+	
+	
 
 	@Override
 	public Map<String, Division> getAllDivisions() {
@@ -127,19 +159,7 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 	}
 
 	@Override
-	public Division getDivision(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<SeasonDivision> getDivisionsForSeason(Season arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Fixture getFixture(String arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -169,12 +189,6 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 	}
 
 	@Override
-	public Season getSeason(Integer arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public SeasonDivision getSeasonDivision(Season arg0, Division arg1) {
 		// TODO Auto-generated method stub
 		return null;
@@ -182,12 +196,6 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 
 	@Override
 	public List<Season> getSeasons() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Team getTeam(String arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -202,12 +210,6 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 	public List<Fixture> getUnplayedFixturesBeforeToday() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void startSession() {
-		// Not required for This implementation
-
 	}
 
 }
