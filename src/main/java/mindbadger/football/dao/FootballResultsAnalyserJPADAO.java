@@ -1,6 +1,8 @@
 package mindbadger.football.dao;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -148,68 +150,105 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 
 	@Override
 	public Map<String, Division> getAllDivisions() {
-		// TODO Auto-generated method stub
-		return null;
+		Iterable<Division> divisions = divisionRepository.findAll();
+		Map<String, Division> divisionsMap = new HashMap<String, Division> ();
+		
+		for (Division division : divisions) {
+			divisionsMap.put(division.getDivisionId(), division);
+		}
+		
+		return divisionsMap;
 	}
 
 	@Override
 	public Map<String, Team> getAllTeams() {
-		// TODO Auto-generated method stub
-		return null;
+		Iterable<Team> teams = teamRepository.findAll();
+		Map<String, Team> teamsMap = new HashMap<String, Team> ();
+		
+		for (Team team : teams) {
+			teamsMap.put(team.getTeamId(), team);
+		}
+		
+		return teamsMap;
 	}
 
 	@Override
-	public List<SeasonDivision> getDivisionsForSeason(Season arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Season> getSeasons() {
+		Iterable<Season> seasons = seasonRepository.findAll();
+		List<Season> seasonsList = new ArrayList<Season> ();
+		
+		for (Season season : seasons) {
+			seasonsList.add(season);
+		}
+		
+		return seasonsList;
 	}
 
 	@Override
 	public List<Fixture> getFixtures() {
-		// TODO Auto-generated method stub
+		Iterable<Fixture> fixtures = fixtureRepository.findAll();
+		List<Fixture> fixturesList = new ArrayList<Fixture> ();
+		
+		for (Fixture fixture : fixtures) {
+			fixturesList.add(fixture);
+		}
+		
+		return fixturesList;
+	}
+
+	@Override
+	public List<SeasonDivision> getDivisionsForSeason(Season season) {
+		Integer seasonNumber = season.getSeasonNumber();
+		Season retrievedSeason = seasonRepository.findOne(seasonNumber);
+		return new ArrayList<SeasonDivision> (retrievedSeason.getSeasonDivisions());
+	}
+
+	@Override
+	public List<SeasonDivisionTeam> getTeamsForDivisionInSeason(SeasonDivision seasonDivision) {
+		Integer seasonNumber = seasonDivision.getSeason().getSeasonNumber();
+		Season retrievedSeason = seasonRepository.findOne(seasonNumber);
+		
+		for (SeasonDivision retrievedSeasonDivision : retrievedSeason.getSeasonDivisions()) {
+			
+			if (seasonDivision.getDivision().getDivisionId().equals(retrievedSeasonDivision.getDivision().getDivisionId())) {
+				return new ArrayList<SeasonDivisionTeam> (seasonDivision.getSeasonDivisionTeams());
+			}
+		}
+		
 		return null;
 	}
 
 	@Override
-	public List<Fixture> getFixturesForDivisionInSeason(SeasonDivision arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Fixture> getFixturesForTeamInDivisionInSeason(SeasonDivision arg0, Team arg1) {
-		// TODO Auto-generated method stub
+	public SeasonDivision getSeasonDivision(Season season, Division division) {
+		Integer seasonNumber = season.getSeasonNumber();
+		Season retrievedSeason = seasonRepository.findOne(seasonNumber);
+		for (SeasonDivision seasonDivision : retrievedSeason.getSeasonDivisions()) {
+			if (division.getDivisionId().equals(seasonDivision.getDivision().getDivisionId())) {
+				return seasonDivision;
+			}
+		}
+		
 		return null;
 	}
 
 	@Override
 	public List<Fixture> getFixturesWithNoFixtureDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return fixtureRepository.getFixturesWithNoFixtureDate();
 	}
 
 	@Override
-	public SeasonDivision getSeasonDivision(Season arg0, Division arg1) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Fixture> getFixturesForTeamInDivisionInSeason(SeasonDivision seasonDivision, Team team) {
+		return fixtureRepository.getFixturesForTeamInDivisionInSeason(seasonDivision, team);
 	}
 
 	@Override
-	public List<Season> getSeasons() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<SeasonDivisionTeam> getTeamsForDivisionInSeason(SeasonDivision arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Fixture> getFixturesForDivisionInSeason(SeasonDivision seasonDivision) {
+		return fixtureRepository.getFixturesForDivisionInSeason(seasonDivision);
 	}
 
 	@Override
 	public List<Fixture> getUnplayedFixturesBeforeToday() {
-		// TODO Auto-generated method stub
-		return null;
+		return fixtureRepository.getUnplayedFixturesBeforeToday();
 	}
 
 }
