@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import mindbadger.footballresultsanalyser.dao.ChangeScoreException;
 import mindbadger.footballresultsanalyser.dao.FootballResultsAnalyserDAO;
 import mindbadger.footballresultsanalyser.domain.Division;
 import mindbadger.footballresultsanalyser.domain.DomainObjectFactory;
@@ -63,8 +64,25 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 	@Override
 	public Fixture addFixture(Season season, Calendar fixtureDate, Division division, Team homeTeam, Team awayTeam, Integer homeGoals,
 			Integer awayGoals) {
+
+		//TODO Copied directly from the Couchbase version - needs refactoring
+		if (season == null) throw new IllegalArgumentException("Please supply a season when creating a fixture");
+		if (division == null) throw new IllegalArgumentException("Please supply a division when creating a fixture");
+		if (homeTeam == null) throw new IllegalArgumentException("Please supply a home team when creating a fixture");
+		if (awayTeam == null) throw new IllegalArgumentException("Please supply an away team when creating a fixture");
+		if (homeGoals != null && fixtureDate == null) throw new IllegalArgumentException("Please supply a fixture date team when creating a played fixture");
+
+		Fixture existingFixture = fixtureRepository.getExistingFixture(season, division, homeTeam, awayTeam);
 		
-		Fixture fixture = domainObjectFactory.createFixture(season, homeTeam, awayTeam);
+		if (fixtureDate != null && existingFixture != null && existingFixture.getFixtureDate() != null) {
+			if (existingFixture.getFixtureDate().before(fixtureDate) &&
+					existingFixture.getHomeGoals() != null && homeGoals != null)
+				throw new ChangeScoreException ("Can't save a playoff result over a regular game");
+		}
+		
+		System.out.println("++++++++++++++++++ existingFixture : " + existingFixture);
+		
+		Fixture fixture = (existingFixture == null ? domainObjectFactory.createFixture(season, homeTeam, awayTeam) : existingFixture);
 		
 		fixture.setDivision(division);
 		fixture.setFixtureDate(fixtureDate);

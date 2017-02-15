@@ -7,8 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import mindbadger.footballresultsanalyser.domain.Division;
 import mindbadger.footballresultsanalyser.domain.Fixture;
 import mindbadger.footballresultsanalyser.domain.FixtureImpl;
+import mindbadger.footballresultsanalyser.domain.Season;
+import mindbadger.footballresultsanalyser.domain.Team;
 
 public interface FixtureCrudRepository extends CrudRepository<FixtureImpl, String>, JpaRepository<FixtureImpl, String> {
 	
@@ -25,4 +28,15 @@ public interface FixtureCrudRepository extends CrudRepository<FixtureImpl, Strin
 	
 	@Query("SELECT f FROM FixtureImpl f where f.fixtureDate < CURRENT_DATE and f.homeGoals is null") 
 	public List<Fixture> getUnplayedFixturesBeforeToday();
+	
+	@Query("SELECT f FROM FixtureImpl f where f.season = :seasonNumber and f.division = :divisionId and f.homeTeam = :homeTeamId and f.awayTeam = :awayTeamId")
+//	public Fixture getExistingFixture(@Param("seasonNumber") Integer seasonNumber,
+//			@Param("divisionId") String divisionId,
+//			@Param("homeTeamId") String homeTeamId,
+//			@Param("awayTeamId") String awayTeamId);
+	public Fixture getExistingFixture(@Param("seasonNumber") Season season,
+		@Param("divisionId") Division division,
+		@Param("homeTeamId") Team homeTeamId,
+		@Param("awayTeamId") Team awayTeamId);
+
 }

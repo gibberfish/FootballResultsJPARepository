@@ -8,8 +8,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import mindbadger.footballresultsanalyser.domain.Division;
 import mindbadger.footballresultsanalyser.domain.Fixture;
 import mindbadger.footballresultsanalyser.domain.FixtureImpl;
+import mindbadger.footballresultsanalyser.domain.Season;
 import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 import mindbadger.footballresultsanalyser.domain.Team;
 import mindbadger.footballresultsanalyser.repository.FixtureRepository;
@@ -70,5 +72,15 @@ public class FixtureRepositoryImpl implements FixtureRepository {
 	@Override
 	public List<Fixture> getUnplayedFixturesBeforeToday() {
 		return fixtureCrudRepository.getUnplayedFixturesBeforeToday();
+	}
+
+	@Override
+	public Fixture getExistingFixture(Season season, Division division, Team homeTeam, Team awayTeam) {
+//		return fixtureCrudRepository.getExistingFixture(season.getSeasonNumber(),
+//				division.getDivisionId(),
+//				homeTeam.getTeamId(),
+//				awayTeam.getTeamId());
+		return fixtureCrudRepository.getExistingFixture(season,	division, homeTeam, awayTeam);
+
 	}
 }
