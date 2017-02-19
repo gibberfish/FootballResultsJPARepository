@@ -45,4 +45,9 @@ public class SeasonRepositoryImpl implements SeasonRepository {
 		
 		return allSeasons;
 	}
+
+	@Override
+	public Season findMatching(Season season) {
+		return findOne(season.getSeasonNumber());
+	}
 }

@@ -45,4 +45,14 @@ public class DivisionRepositoryImpl implements DivisionRepository {
 		
 		return allDivisions;
 	}
+
+	@Override
+	public Division findDivisionByName(String name) {
+		return divisionCrudRepository.findDivisionByName (name);
+	}
+
+	@Override
+	public Division findMatching(Division division) {
+		return findDivisionByName(division.getDivisionName());
+	}
 }

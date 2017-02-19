@@ -45,4 +45,14 @@ public class TeamRepositoryImpl implements TeamRepository {
 		
 		return allTeams;
 	}
+
+	@Override
+	public Team findTeamByName(String name) {
+		return teamCrudRepository.findTeamByName(name);
+	}
+
+	@Override
+	public Team findMatching(Team team) {
+		return findTeamByName(team.getTeamName());
+	}
 }

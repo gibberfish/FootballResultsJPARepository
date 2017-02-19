@@ -53,12 +53,36 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 	}
 	
 	@Override
+	public Season addSeason(Integer seasonNumber) {
+		Season existingSeason = seasonRepository.findOne(seasonNumber);
+		
+		Season season = (existingSeason == null ? domainObjectFactory.createSeason(seasonNumber) : existingSeason);
+		
+		season = seasonRepository.save(season);
+		
+		return season;
+	}
+	
+	@Override
 	public Division addDivision(String name) {
-		Division division = domainObjectFactory.createDivision(name);
+		Division existingDivision = divisionRepository.findDivisionByName(name);
+		
+		Division division = (existingDivision == null ? domainObjectFactory.createDivision(name) : existingDivision);
 		
 		division = divisionRepository.save(division);
 		
 		return division;
+	}
+	
+	@Override
+	public Team addTeam(String name) {
+		Team existingTeam = teamRepository.findTeamByName(name);
+		
+		Team team = (existingTeam == null ? domainObjectFactory.createTeam(name) : existingTeam);
+		
+		team = teamRepository.save(team);
+		
+		return team;
 	}
 
 	@Override
@@ -72,7 +96,7 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 		if (awayTeam == null) throw new IllegalArgumentException("Please supply an away team when creating a fixture");
 		if (homeGoals != null && fixtureDate == null) throw new IllegalArgumentException("Please supply a fixture date team when creating a played fixture");
 
-		Fixture existingFixture = fixtureRepository.getExistingFixture(season, division, homeTeam, awayTeam);
+		Fixture existingFixture = fixtureRepository.getExistingFixture(season, homeTeam, awayTeam);
 		
 		if (fixtureDate != null && existingFixture != null && existingFixture.getFixtureDate() != null) {
 			if (existingFixture.getFixtureDate().before(fixtureDate) &&
@@ -99,15 +123,6 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 	}
 
 	@Override
-	public Season addSeason(Integer seasonNumber) {
-		Season season = domainObjectFactory.createSeason(seasonNumber);
-		
-		season = seasonRepository.save(season);
-		
-		return season;
-	}
-
-	@Override
 	public SeasonDivision addSeasonDivision(Season season, Division division, int position) {
 		SeasonDivision seasonDivision = domainObjectFactory.createSeasonDivision(season, division, position);
 		
@@ -129,15 +144,6 @@ public class FootballResultsAnalyserJPADAO implements FootballResultsAnalyserDAO
 		seasonRepository.save(season);
 		
 		return seasonDivisionTeam;
-	}
-
-	@Override
-	public Team addTeam(String name) {
-		Team team = domainObjectFactory.createTeam(name);
-		
-		team = teamRepository.save(team);
-
-		return team;
 	}
 	
 	@Override
