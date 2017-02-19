@@ -7,8 +7,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import mindbadger.footballresultsanalyser.domain.Division;
 import mindbadger.footballresultsanalyser.domain.Season;
+import mindbadger.footballresultsanalyser.domain.SeasonDivision;
+import mindbadger.footballresultsanalyser.domain.SeasonDivisionTeam;
 import mindbadger.footballresultsanalyser.domain.SeasonImpl;
+import mindbadger.footballresultsanalyser.domain.Team;
 import mindbadger.footballresultsanalyser.repository.SeasonRepository;
 
 @Component
@@ -49,5 +53,26 @@ public class SeasonRepositoryImpl implements SeasonRepository {
 	@Override
 	public Season findMatching(Season season) {
 		return findOne(season.getSeasonNumber());
+	}
+
+	@Override
+	public SeasonDivision getSeasonDivision(Season season, Division division) {
+		Season retrievedSeason = findMatching(season);
+		for (SeasonDivision seasonDivision : retrievedSeason.getSeasonDivisions()) {
+			if (division.getDivisionId().equals(seasonDivision.getDivision().getDivisionId())) {
+				return seasonDivision;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public SeasonDivisionTeam getSeasonDivisionTeam(SeasonDivision seasonDivision, Team team) {
+		for (SeasonDivisionTeam seasonDivisionTeam : seasonDivision.getSeasonDivisionTeams()) {
+			if (team.getTeamId().equals(seasonDivisionTeam.getTeam().getTeamId())) {
+				return seasonDivisionTeam;
+			}
+		}
+		return null;
 	}
 }
