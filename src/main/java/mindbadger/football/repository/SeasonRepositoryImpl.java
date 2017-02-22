@@ -13,10 +13,11 @@ import mindbadger.footballresultsanalyser.domain.SeasonDivision;
 import mindbadger.footballresultsanalyser.domain.SeasonDivisionTeam;
 import mindbadger.footballresultsanalyser.domain.SeasonImpl;
 import mindbadger.footballresultsanalyser.domain.Team;
+import mindbadger.footballresultsanalyser.repository.AbstractRepository;
 import mindbadger.footballresultsanalyser.repository.SeasonRepository;
 
 @Component
-public class SeasonRepositoryImpl implements SeasonRepository {
+public class SeasonRepositoryImpl extends AbstractRepository<Season, Integer> implements SeasonRepository {
 	@Autowired
 	private SeasonCrudRepository seasonCrudRepository;
 	
@@ -52,7 +53,7 @@ public class SeasonRepositoryImpl implements SeasonRepository {
 
 	@Override
 	public Season findMatching(Season season) {
-		return findOne(season.getSeasonNumber());
+		return findOne(getIDFor(season));
 	}
 
 	@Override
@@ -74,5 +75,16 @@ public class SeasonRepositoryImpl implements SeasonRepository {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public Integer getIDFor(Season season) {
+		return season.getSeasonNumber();
+	}
+
+	@Override
+	public Season update(Season seasonToUpdate, Season seasonToCopyValuesFrom) {
+		seasonToUpdate.setSeasonDivisions(seasonToCopyValuesFrom.getSeasonDivisions());
+		return seasonToUpdate;
 	}
 }

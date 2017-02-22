@@ -9,10 +9,11 @@ import org.springframework.stereotype.Component;
 
 import mindbadger.footballresultsanalyser.domain.Team;
 import mindbadger.footballresultsanalyser.domain.TeamImpl;
+import mindbadger.footballresultsanalyser.repository.AbstractRepository;
 import mindbadger.footballresultsanalyser.repository.TeamRepository;
 
 @Component
-public class TeamRepositoryImpl implements TeamRepository {
+public class TeamRepositoryImpl extends AbstractRepository<Team, String> implements TeamRepository {
 	@Autowired
 	private TeamCrudRepository teamCrudRepository;
 
@@ -55,4 +56,17 @@ public class TeamRepositoryImpl implements TeamRepository {
 	public Team findMatching(Team team) {
 		return findTeamByName(team.getTeamName());
 	}
+
+	@Override
+	public String getIDFor(Team team) {
+		return team.getTeamId();
+	}
+
+	@Override
+	public Team update(Team teamToUpdate, Team teamToCopyValuesFrom) {
+		teamToUpdate.setTeamName(teamToCopyValuesFrom.getTeamName());
+		teamToUpdate.setTeamShortName(teamToCopyValuesFrom.getTeamShortName());
+		return teamToUpdate;
+	}
 }
+
