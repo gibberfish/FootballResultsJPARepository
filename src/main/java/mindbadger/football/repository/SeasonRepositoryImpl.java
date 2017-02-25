@@ -7,17 +7,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mindbadger.footballresultsanalyser.domain.Division;
 import mindbadger.footballresultsanalyser.domain.Season;
-import mindbadger.footballresultsanalyser.domain.SeasonDivision;
-import mindbadger.footballresultsanalyser.domain.SeasonDivisionTeam;
 import mindbadger.footballresultsanalyser.domain.SeasonImpl;
-import mindbadger.footballresultsanalyser.domain.Team;
-import mindbadger.footballresultsanalyser.repository.AbstractRepository;
-import mindbadger.footballresultsanalyser.repository.SeasonRepository;
+import mindbadger.footballresultsanalyser.repository.AbstractSeasonRepository;
 
 @Component
-public class SeasonRepositoryImpl extends AbstractRepository<Season, Integer> implements SeasonRepository {
+public class SeasonRepositoryImpl extends AbstractSeasonRepository {
 	@Autowired
 	private SeasonCrudRepository seasonCrudRepository;
 	
@@ -49,42 +44,5 @@ public class SeasonRepositoryImpl extends AbstractRepository<Season, Integer> im
 		}
 		
 		return allSeasons;
-	}
-
-	@Override
-	public Season findMatching(Season season) {
-		return findOne(getIDFor(season));
-	}
-
-	@Override
-	public SeasonDivision getSeasonDivision(Season season, Division division) {
-		Season retrievedSeason = findMatching(season);
-		for (SeasonDivision seasonDivision : retrievedSeason.getSeasonDivisions()) {
-			if (division.getDivisionId().equals(seasonDivision.getDivision().getDivisionId())) {
-				return seasonDivision;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public SeasonDivisionTeam getSeasonDivisionTeam(SeasonDivision seasonDivision, Team team) {
-		for (SeasonDivisionTeam seasonDivisionTeam : seasonDivision.getSeasonDivisionTeams()) {
-			if (team.getTeamId().equals(seasonDivisionTeam.getTeam().getTeamId())) {
-				return seasonDivisionTeam;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public Integer getIDFor(Season season) {
-		return season.getSeasonNumber();
-	}
-
-	@Override
-	public Season update(Season seasonToUpdate, Season seasonToCopyValuesFrom) {
-		seasonToUpdate.setSeasonDivisions(seasonToCopyValuesFrom.getSeasonDivisions());
-		return seasonToUpdate;
 	}
 }

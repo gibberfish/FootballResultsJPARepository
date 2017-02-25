@@ -9,11 +9,10 @@ import org.springframework.stereotype.Component;
 
 import mindbadger.footballresultsanalyser.domain.Division;
 import mindbadger.footballresultsanalyser.domain.DivisionImpl;
-import mindbadger.footballresultsanalyser.repository.AbstractRepository;
-import mindbadger.footballresultsanalyser.repository.DivisionRepository;
+import mindbadger.footballresultsanalyser.repository.AbstractDivisionRepository;
 
 @Component
-public class DivisionRepositoryImpl extends AbstractRepository<Division, String> implements DivisionRepository {
+public class DivisionRepositoryImpl extends AbstractDivisionRepository {
 	@Autowired
 	private DivisionCrudRepository divisionCrudRepository;
 
@@ -50,21 +49,5 @@ public class DivisionRepositoryImpl extends AbstractRepository<Division, String>
 	@Override
 	public Division findDivisionByName(String name) {
 		return divisionCrudRepository.findDivisionByName (name);
-	}
-
-	@Override
-	public Division findMatching(Division division) {
-		return findDivisionByName(division.getDivisionName());
-	}
-
-	@Override
-	public String getIDFor(Division division) {
-		return division.getDivisionId();
-	}
-
-	@Override
-	public Division update(Division divisionToUpdate, Division divisionToCopyValuesFrom) {
-		divisionToUpdate.setDivisionName(divisionToCopyValuesFrom.getDivisionName());
-		return divisionToUpdate;
 	}
 }
