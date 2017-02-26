@@ -1,5 +1,6 @@
 package mindbadger.football.repository;
 
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -77,5 +78,10 @@ public class FixtureRepositoryImpl extends AbstractFixtureRepository {
 	public Fixture getExistingFixture(Season season, Team homeTeam, Team awayTeam) {
 		return fixtureCrudRepository.getExistingFixture(season,	homeTeam, awayTeam);
 
+	}
+
+	@Override
+	public List<Fixture> getUnplayedFixturesOnDate(Calendar fixtureDate) {
+		return fixtureCrudRepository.getUnplayedFixturesOnDate(fixtureDate);
 	}
 }

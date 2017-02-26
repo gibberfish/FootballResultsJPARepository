@@ -1,5 +1,6 @@
 package mindbadger.football.repository;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,4 +34,6 @@ public interface FixtureCrudRepository extends CrudRepository<FixtureImpl, Strin
 		@Param("homeTeamId") Team homeTeamId,
 		@Param("awayTeamId") Team awayTeamId);
 
+	@Query("SELECT f FROM FixtureImpl f where f.fixtureDate = :fixtureDate and f.homeGoals is null")
+	public List<Fixture> getUnplayedFixturesOnDate(@Param("fixtureDate") Calendar fixtureDate);
 }
