@@ -1,4 +1,4 @@
-package mindbadger.footballresultsanalyser.domain;
+package mindbadger.football.domain;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -16,10 +16,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import mindbadger.footballresultsanalyser.domain.Division;
-import mindbadger.footballresultsanalyser.domain.Fixture;
-import mindbadger.footballresultsanalyser.domain.Season;
-import mindbadger.footballresultsanalyser.domain.Team;
+import mindbadger.football.domain.Division;
+import mindbadger.football.domain.Fixture;
+import mindbadger.football.domain.Season;
+import mindbadger.football.domain.Team;
 
 @Entity
 @Table(name = "fixture")

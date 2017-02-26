@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import mindbadger.footballresultsanalyser.domain.DivisionImpl;
+import mindbadger.football.domain.DivisionImpl;
 
 public class DivisionImplTest {
 	DivisionImpl objectUnderTest;

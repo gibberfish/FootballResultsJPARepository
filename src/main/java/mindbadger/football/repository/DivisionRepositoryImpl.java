@@ -7,9 +7,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mindbadger.footballresultsanalyser.domain.Division;
-import mindbadger.footballresultsanalyser.domain.DivisionImpl;
-import mindbadger.footballresultsanalyser.repository.AbstractDivisionRepository;
+import mindbadger.football.domain.Division;
+import mindbadger.football.domain.DivisionImpl;
+import mindbadger.football.repository.AbstractDivisionRepository;
 
 @Component
 public class DivisionRepositoryImpl extends AbstractDivisionRepository {

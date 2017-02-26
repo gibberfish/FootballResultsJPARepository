@@ -7,9 +7,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mindbadger.footballresultsanalyser.domain.Team;
-import mindbadger.footballresultsanalyser.domain.TeamImpl;
-import mindbadger.footballresultsanalyser.repository.AbstractTeamRepository;
+import mindbadger.football.domain.Team;
+import mindbadger.football.domain.TeamImpl;
+import mindbadger.football.repository.AbstractTeamRepository;
 
 @Component
 public class TeamRepositoryImpl extends AbstractTeamRepository {

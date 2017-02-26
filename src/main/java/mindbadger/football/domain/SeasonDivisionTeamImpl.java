@@ -1,4 +1,4 @@
-package mindbadger.footballresultsanalyser.domain;
+package mindbadger.football.domain;
 
 import java.io.Serializable;
 

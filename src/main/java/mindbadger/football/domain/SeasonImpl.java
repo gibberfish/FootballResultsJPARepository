@@ -1,4 +1,4 @@
-package mindbadger.footballresultsanalyser.domain;
+package mindbadger.football.domain;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -7,8 +7,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import mindbadger.footballresultsanalyser.domain.Season;
-import mindbadger.footballresultsanalyser.domain.SeasonDivision;
+import mindbadger.football.domain.Season;
+import mindbadger.football.domain.SeasonDivision;
 
 @Entity
 @Table(name = "season")

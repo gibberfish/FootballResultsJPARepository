@@ -7,10 +7,10 @@ import org.mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import mindbadger.footballresultsanalyser.domain.Division;
-import mindbadger.footballresultsanalyser.domain.FixtureImpl;
-import mindbadger.footballresultsanalyser.domain.Season;
-import mindbadger.footballresultsanalyser.domain.Team;
+import mindbadger.football.domain.Division;
+import mindbadger.football.domain.FixtureImpl;
+import mindbadger.football.domain.Season;
+import mindbadger.football.domain.Team;
 
 public class FixtureImplTest {
 	FixtureImpl objectUnderTest;

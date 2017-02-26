@@ -11,10 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
 
-import mindbadger.footballresultsanalyser.domain.DivisionImpl;
-import mindbadger.footballresultsanalyser.domain.SeasonDivision;
-import mindbadger.footballresultsanalyser.domain.SeasonDivisionImpl;
-import mindbadger.footballresultsanalyser.domain.SeasonImpl;
+import mindbadger.football.domain.DivisionImpl;
+import mindbadger.football.domain.SeasonDivision;
+import mindbadger.football.domain.SeasonDivisionImpl;
+import mindbadger.football.domain.SeasonImpl;
 
 public class SeasonImplTest {
 	SeasonImpl objectUnderTest;

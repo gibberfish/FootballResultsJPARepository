@@ -7,9 +7,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mindbadger.footballresultsanalyser.domain.Season;
-import mindbadger.footballresultsanalyser.domain.SeasonImpl;
-import mindbadger.footballresultsanalyser.repository.AbstractSeasonRepository;
+import mindbadger.football.domain.Season;
+import mindbadger.football.domain.SeasonImpl;
+import mindbadger.football.repository.AbstractSeasonRepository;
 
 @Component
 public class SeasonRepositoryImpl extends AbstractSeasonRepository {

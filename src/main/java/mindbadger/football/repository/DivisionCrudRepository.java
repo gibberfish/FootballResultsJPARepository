@@ -4,8 +4,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import mindbadger.footballresultsanalyser.domain.Division;
-import mindbadger.footballresultsanalyser.domain.DivisionImpl;
+import mindbadger.football.domain.Division;
+import mindbadger.football.domain.DivisionImpl;
 
 public interface DivisionCrudRepository extends CrudRepository<DivisionImpl, String>{
 

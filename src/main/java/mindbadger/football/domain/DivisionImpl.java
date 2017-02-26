@@ -1,4 +1,4 @@
-package mindbadger.footballresultsanalyser.domain;
+package mindbadger.football.domain;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import mindbadger.footballresultsanalyser.domain.Division;
+import mindbadger.football.domain.Division;
 
 @Entity
 @Table(name = "division")

@@ -8,12 +8,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mindbadger.footballresultsanalyser.domain.Fixture;
-import mindbadger.footballresultsanalyser.domain.FixtureImpl;
-import mindbadger.footballresultsanalyser.domain.Season;
-import mindbadger.footballresultsanalyser.domain.SeasonDivision;
-import mindbadger.footballresultsanalyser.domain.Team;
-import mindbadger.footballresultsanalyser.repository.AbstractFixtureRepository;
+import mindbadger.football.domain.Fixture;
+import mindbadger.football.domain.FixtureImpl;
+import mindbadger.football.domain.Season;
+import mindbadger.football.domain.SeasonDivision;
+import mindbadger.football.domain.Team;
+import mindbadger.football.repository.AbstractFixtureRepository;
 
 @Component
 public class FixtureRepositoryImpl extends AbstractFixtureRepository {
