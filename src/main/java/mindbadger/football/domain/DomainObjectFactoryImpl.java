@@ -60,4 +60,19 @@ public class DomainObjectFactoryImpl implements DomainObjectFactory {
 		fixture.setAwayTeam(awayTeam);
 		return fixture;
 	}
+
+	@Override
+	public DivisionMapping createDivisionMapping (String dialect, Integer sourceId, Integer fraId) {
+		return new DivisionMappingImpl (dialect, sourceId, fraId);
+	}
+
+	@Override
+	public TeamMapping createTeamMapping (String dialect, Integer sourceId, Integer fraId) {
+		return new TeamMappingImpl (dialect, sourceId, fraId);
+	}
+
+	@Override
+	public TrackedDivision createTrackedDivision (String dialect, Integer sourceId) {
+		return new TrackedDivisionImpl (dialect, sourceId);
+	}
 }
