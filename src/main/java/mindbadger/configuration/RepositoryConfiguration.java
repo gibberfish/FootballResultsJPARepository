@@ -38,7 +38,8 @@ public class RepositoryConfiguration extends JpaBaseConfiguration {
 	protected Map<String, Object> getVendorProperties() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
         map.put(PersistenceUnitProperties.BATCH_WRITING, BatchWriting.JDBC);
-        map.put(PersistenceUnitProperties.LOGGING_LEVEL, SessionLog.FINE_LABEL);
+        //map.put(PersistenceUnitProperties.LOGGING_LEVEL, SessionLog.FINE_LABEL);
+        map.put(PersistenceUnitProperties.LOGGING_LEVEL, SessionLog.INFO_LABEL);
 		return map;
 	}
 

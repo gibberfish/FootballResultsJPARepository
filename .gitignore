@@ -3,6 +3,7 @@
 *.project
 .settings
 target
+*.csv
 
 # Package Files #
 *.jar
