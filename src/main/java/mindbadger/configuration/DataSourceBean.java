@@ -5,12 +5,15 @@ import javax.sql.DataSource;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+//import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
+//import org.springframework.stereotype.Component;
 
-@Configuration
-@Component
+/* 
+ * Not used, but left in the codebase as an illustration of how we can do this without propreties files in the future if necessary
+ */
+//@Configuration
+//@Component
 public class DataSourceBean {
 
 	@ConfigurationProperties(prefix = "spring.datasource")
