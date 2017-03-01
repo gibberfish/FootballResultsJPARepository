@@ -52,17 +52,18 @@ order by sd_h.ssn_num desc, d.div_name, ht.team_name;
 
 
 -- Count the number of fixtures for each team in a given season division
-select	sdt.ssn_num, d.div_name, t.team_name, count(*)
+select	sdt.ssn_num, d.div_id, d.div_name, t.team_name, t.team_id, count(*)
 from 	season_division_team sdt,
         division d,
         team t,
         fixture f
 where	d.div_id = sdt.div_id
+and sdt.ssn_num = 1995
 and		t.team_id = sdt.team_id
 and		f.ssn_num = sdt.ssn_num
 and		f.div_id = sdt.div_id
 and		(f.home_team_id = sdt.team_id or f.away_team_id = sdt.team_id)
-group by sdt.ssn_num, sdt.div_id, sdt.team_id
+group by sdt.ssn_num, d.div_id, d.div_name, t.team_name, t.team_id
 order by sdt.ssn_num desc, sdt.div_id, sdt.team_id
 ;
 
@@ -126,4 +127,53 @@ and		sdt.ssn_num = sd.ssn_num
 and		sdt.div_id = sd.div_id
 and		d.div_id = sd.div_id
 and		t.team_id = sdt.team_id
-order by	sd.ssn_num, sd.div_pos, t.team_name;
+order by	sd.ssn_num, t.team_name;
+
+-- Find any teams that are in different divisions in the same season
+select	sd.ssn_num, t.team_id, t.team_name, count(*)
+from	division d,
+        team t,
+        season_division sd,
+        season_division_team sdt
+where	sdt.ssn_num = sd.ssn_num
+and		sdt.div_id = sd.div_id
+and		d.div_id = sd.div_id
+and		t.team_id = sdt.team_id
+group by sd.ssn_num, t.team_id, t.team_name
+having count(*) > 1;
+
+-- Show the duplicate divisions for each team found...
+select	t.team_id, t.team_name, d.div_id, d.div_name
+from	division d,
+        team t,
+        season_division sd,
+        season_division_team sdt
+where	sdt.ssn_num = sd.ssn_num
+and		sdt.div_id = sd.div_id
+and		d.div_id = sd.div_id
+and		t.team_id = sdt.team_id
+and		sd.ssn_num = 2002
+and		t.team_id = 23;
+
+-- Fill in the blanks for season division teams
+insert into season_division_team
+(ssn_num, div_id, team_id)
+select distinct f.ssn_num, f.div_id, f.away_team_id
+from fixture f
+where f.ssn_num = 1995
+and not exists (select 'x' from season_division_team sdt where sdt.ssn_num = f.ssn_num and sdt.div_id = f.div_id and sdt.team_id = f.away_team_id);
+
+-- Find teams in division
+select sd.ssn_num, d.div_name, t.team_name
+from season_division_team sdt,
+		season_division sd,
+		division d,
+        team t
+where	sd.ssn_num = sdt.ssn_num
+and		sd.div_id = sdt.div_id
+and		d.div_id = sd.div_id
+and		t.team_id = sdt.team_id
+order by sd.ssn_num desc, sd.div_pos, t.team_name;
+
+
+
