@@ -23,7 +23,7 @@ public class SeasonRepositoryImpl extends AbstractSeasonRepository {
 
 	@Override
 	public Season findOne(Integer seasonId) {
-		return seasonCrudRepository.findOne(seasonId);
+		return (seasonId == null ? null : seasonCrudRepository.findOne(seasonId));
 	}
 
 	@Override
