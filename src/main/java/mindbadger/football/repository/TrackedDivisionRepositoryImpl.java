@@ -39,6 +39,8 @@ public class TrackedDivisionRepositoryImpl implements TrackedDivisionRepository 
 	
 	@Override
 	public TrackedDivision findOne(TrackedDivision trackedDivision) {
+		if (trackedDivision == null) return null;
+		
 		TrackedDivisionId trackedDivisionId = new TrackedDivisionId ();
 		trackedDivisionId.setDialect(trackedDivision.getDialect());
 		trackedDivisionId.setSourceId(trackedDivision.getSourceId());

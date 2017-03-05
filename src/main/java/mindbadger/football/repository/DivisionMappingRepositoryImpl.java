@@ -38,6 +38,8 @@ public class DivisionMappingRepositoryImpl implements DivisionMappingRepository 
 
 	@Override
 	public DivisionMapping findOne(DivisionMapping divisionMapping) {
+		if (divisionMapping == null) return null;
+		
 		MappingId mappingId = new MappingId ();
 		mappingId.setDialect(divisionMapping.getDialect());
 		mappingId.setSourceId(divisionMapping.getSourceId());

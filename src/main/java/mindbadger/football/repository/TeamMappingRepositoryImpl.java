@@ -38,6 +38,8 @@ public class TeamMappingRepositoryImpl implements TeamMappingRepository {
 
 	@Override
 	public TeamMapping findOne(TeamMapping teamMapping) {
+		if (teamMapping == null) return null;
+		
 		MappingId mappingId = new MappingId ();
 		mappingId.setDialect(teamMapping.getDialect());
 		mappingId.setSourceId(teamMapping.getSourceId());
