@@ -18,7 +18,7 @@ public class SeasonDivisionTeamId implements Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (! (obj instanceof SeasonDivisionId)) return false;
+		if (! (obj instanceof SeasonDivisionTeamId)) return false;
 		SeasonDivisionTeamId seasonDivisionTeamId = (SeasonDivisionTeamId) obj;
 		
 		boolean seasonDivisionEqual = seasonDivision.equals(seasonDivisionTeamId.seasonDivision);

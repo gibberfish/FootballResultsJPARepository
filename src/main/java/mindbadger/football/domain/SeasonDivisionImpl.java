@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,12 +47,12 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 	private int divisionPosition;
 
 	//@Transient
-	@OneToMany(mappedBy = "seasonDivision", targetEntity=SeasonDivisionTeamImpl.class, fetch = FetchType.LAZY, orphanRemoval=true)
+	@OneToMany(mappedBy = "seasonDivision", targetEntity=SeasonDivisionTeamImpl.class, fetch = FetchType.LAZY, orphanRemoval=true, cascade=CascadeType.ALL)
 	private Set<SeasonDivisionTeam> seasonDivisionTeams; 
 	
 	@Override
 	public Set<SeasonDivisionTeam> getSeasonDivisionTeams() {
-		return seasonDivisionTeams;
+		return this.seasonDivisionTeams;
 	}
 	
 	@Override
