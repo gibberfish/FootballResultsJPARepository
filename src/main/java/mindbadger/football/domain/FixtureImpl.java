@@ -31,7 +31,7 @@ public class FixtureImpl implements Fixture, Serializable {
 	@Column(name = "fixture_id")
 	private String fixtureId;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@Column(name = "fixture_date")
 	private Calendar fixtureDate;
 	

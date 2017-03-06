@@ -14,7 +14,6 @@ import mindbadger.football.domain.FixtureImpl;
 import mindbadger.football.domain.Season;
 import mindbadger.football.domain.SeasonDivision;
 import mindbadger.football.domain.Team;
-import mindbadger.football.repository.AbstractFixtureRepository;
 
 @Component
 public class FixtureRepositoryImpl extends AbstractFixtureRepository {
@@ -58,15 +57,12 @@ public class FixtureRepositoryImpl extends AbstractFixtureRepository {
 
 	@Override
 	public List<Fixture> getFixturesForDivisionInSeason(SeasonDivision seasonDivision) {
-		return fixtureCrudRepository.getFixturesForDivisionInSeason(seasonDivision.getSeason().getSeasonNumber(),
-				seasonDivision.getDivision().getDivisionId());
+		return fixtureCrudRepository.getFixturesForDivisionInSeason(seasonDivision.getSeason(),	seasonDivision.getDivision());
 	}
 
 	@Override
 	public List<Fixture> getFixturesForTeamInDivisionInSeason(SeasonDivision seasonDivision, Team team) {
-		return fixtureCrudRepository.getFixturesForTeamInDivisionInSeason(seasonDivision.getSeason().getSeasonNumber(),
-				seasonDivision.getDivision().getDivisionId(),
-				team.getTeamId());
+		return fixtureCrudRepository.getFixturesForTeamInDivisionInSeason(seasonDivision.getSeason(), seasonDivision.getDivision(), team);
 	}
 
 	@Override
@@ -77,7 +73,6 @@ public class FixtureRepositoryImpl extends AbstractFixtureRepository {
 	@Override
 	public Fixture getExistingFixture(Season season, Team homeTeam, Team awayTeam) {
 		return fixtureCrudRepository.getExistingFixture(season,	homeTeam, awayTeam);
-
 	}
 
 	@Override
