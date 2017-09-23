@@ -4,6 +4,9 @@
 .settings
 target
 *.csv
+*.iml
+
+.idea
 
 # Package Files #
 *.jar

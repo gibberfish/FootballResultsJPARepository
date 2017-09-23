@@ -1,5 +1,7 @@
 package mindbadger.football.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -33,6 +35,7 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 		this.divisionPosition = divisionPosition;
 	}
 
+	@JsonManagedReference
 	@Id
 	@ManyToOne(targetEntity=SeasonImpl.class)
 	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")

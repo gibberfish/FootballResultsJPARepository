@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import mindbadger.football.domain.Season;
 import mindbadger.football.domain.SeasonDivision;
 
@@ -28,6 +29,7 @@ public class SeasonImpl implements Season, Serializable {
 	@Column(name = "ssn_num")
 	private Integer seasonNumber;
 
+	@JsonBackReference
 	@OneToMany(mappedBy = "season", targetEntity=SeasonDivisionImpl.class, fetch = FetchType.LAZY, orphanRemoval=true, cascade=CascadeType.ALL)
 	private Set<SeasonDivision> seasonDivisions; 
 	
