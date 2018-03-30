@@ -19,7 +19,7 @@ import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
 @Configuration
-@ComponentScan 
+@ComponentScan
 @EnableAutoConfiguration 
 public class RepositoryConfiguration extends JpaBaseConfiguration {
 
