@@ -61,6 +61,11 @@ public class FixtureRepositoryImpl extends AbstractFixtureRepository {
 	}
 
 	@Override
+	public List<Fixture> getFixturesForDivisionInSeasonOnDate(SeasonDivision seasonDivision, Calendar fixtureDate) {
+		return fixtureCrudRepository.getFixturesForDivisionInSeasonOnDate(seasonDivision.getSeason(), seasonDivision.getDivision(), fixtureDate);
+	}
+
+	@Override
 	public List<Fixture> getFixturesForTeamInDivisionInSeason(SeasonDivision seasonDivision, Team team) {
 		return fixtureCrudRepository.getFixturesForTeamInDivisionInSeason(seasonDivision.getSeason(), seasonDivision.getDivision(), team);
 	}
