@@ -19,7 +19,7 @@ public class SeasonDivisionId implements Serializable {
 		if (! (obj instanceof SeasonDivisionId)) return false;
 		SeasonDivisionId seasonDivsionId = (SeasonDivisionId) obj;
 		
-		boolean seasonIdEqual = (season == seasonDivsionId.season);
+		boolean seasonIdEqual = (season.equals(seasonDivsionId.season));
 		boolean divisionIdEqual = division.equals(seasonDivsionId.division);
 		
 		return (seasonIdEqual && divisionIdEqual);

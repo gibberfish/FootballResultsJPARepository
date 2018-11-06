@@ -10,6 +10,8 @@ import mindbadger.football.domain.SeasonDivision;
 import mindbadger.football.domain.SeasonDivisionTeam;
 import mindbadger.football.domain.Team;
 
+import java.util.Calendar;
+
 @Component
 public class DomainObjectFactoryImpl implements DomainObjectFactory {
 
@@ -69,6 +71,11 @@ public class DomainObjectFactoryImpl implements DomainObjectFactory {
 	@Override
 	public TeamMapping createTeamMapping (String dialect, Integer sourceId, Integer fraId) {
 		return new TeamMappingImpl (dialect, sourceId, fraId);
+	}
+
+	@Override
+	public TeamStatistic createTeamStatistic(SeasonDivisionTeam seasonDivisionTeam, Calendar fixtureDate) {
+		return new TeamStatisticImpl(seasonDivisionTeam, fixtureDate);
 	}
 
 	@Override
