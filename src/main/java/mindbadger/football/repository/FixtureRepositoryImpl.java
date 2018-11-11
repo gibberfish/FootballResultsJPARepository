@@ -15,7 +15,7 @@ import mindbadger.football.domain.Season;
 import mindbadger.football.domain.SeasonDivision;
 import mindbadger.football.domain.Team;
 
-@Component
+@Component ("fixtureRepository")
 public class FixtureRepositoryImpl extends AbstractFixtureRepository {
 	@Autowired
 	private FixtureCrudRepository fixtureCrudRepository;
@@ -84,4 +84,11 @@ public class FixtureRepositoryImpl extends AbstractFixtureRepository {
 	public List<Fixture> getUnplayedFixturesOnDate(Calendar fixtureDate) {
 		return fixtureCrudRepository.getUnplayedFixturesOnDate(fixtureDate);
 	}
+
+	@Override
+	public List<Calendar> getFixtureDatesForDivisionInSeason(SeasonDivision seasonDivision) {
+		return fixtureCrudRepository.getFixtureDatesForDivisionInSeason(seasonDivision);
+	}
+
+
 }

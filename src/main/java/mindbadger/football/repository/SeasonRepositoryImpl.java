@@ -11,7 +11,7 @@ import mindbadger.football.domain.Season;
 import mindbadger.football.domain.SeasonImpl;
 import mindbadger.football.repository.AbstractSeasonRepository;
 
-@Component
+@Component ("seasonRepository")
 public class SeasonRepositoryImpl extends AbstractSeasonRepository {
 	@Autowired
 	private SeasonCrudRepository seasonCrudRepository;

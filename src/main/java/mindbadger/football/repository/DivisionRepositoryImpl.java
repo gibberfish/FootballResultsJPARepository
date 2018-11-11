@@ -11,7 +11,7 @@ import mindbadger.football.domain.Division;
 import mindbadger.football.domain.DivisionImpl;
 import mindbadger.football.repository.AbstractDivisionRepository;
 
-@Component
+@Component ("divisionRepository")
 public class DivisionRepositoryImpl extends AbstractDivisionRepository {
 	@Autowired
 	private DivisionCrudRepository divisionCrudRepository;

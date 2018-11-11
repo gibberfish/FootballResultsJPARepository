@@ -38,4 +38,7 @@ public interface FixtureCrudRepository extends CrudRepository<FixtureImpl, Strin
 	List<Fixture> getFixturesForDivisionInSeasonOnDate(@Param("season") Season season,
 													   @Param("division") Division divisionId,
 													   @Param("fixtureDate") Calendar fixtureDate);
+
+	@Query("SELECT distinct f.fixtureDate FROM FixtureImpl f where f.season = :season and f.division = :division ORDER BY f.fixtureDate")
+	List<Calendar> getFixtureDatesForDivisionInSeason(SeasonDivision seasonDivision);
 }

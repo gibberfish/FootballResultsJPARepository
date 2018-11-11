@@ -12,8 +12,13 @@ import mindbadger.football.domain.Team;
 
 import java.util.Calendar;
 
-@Component
+@Component("domainObjectFactory")
 public class DomainObjectFactoryImpl implements DomainObjectFactory {
+
+	@Override
+	public Division createDivision() {
+		return new DivisionImpl();
+	}
 
 	@Override
 	public Division createDivision(String divisionName) {
@@ -21,7 +26,12 @@ public class DomainObjectFactoryImpl implements DomainObjectFactory {
 		division.setDivisionName(divisionName);
 		return division;
 	}
-	
+
+	@Override
+	public Team createTeam() {
+		return new TeamImpl();
+	}
+
 	@Override
 	public Team createTeam(String teamName) {
 		Team team = new TeamImpl();
@@ -30,10 +40,20 @@ public class DomainObjectFactoryImpl implements DomainObjectFactory {
 	}
 
 	@Override
+	public Season createSeason() {
+		return new SeasonImpl();
+	}
+
+	@Override
 	public Season createSeason(Integer seasonNumber) {
 		Season season = new SeasonImpl();
 		season.setSeasonNumber(seasonNumber);
 		return season;
+	}
+
+	@Override
+	public SeasonDivision createSeasonDivision() {
+		return new SeasonDivisionImpl();
 	}
 
 	@Override
@@ -46,6 +66,11 @@ public class DomainObjectFactoryImpl implements DomainObjectFactory {
 	}
 
 	@Override
+	public SeasonDivisionTeam createSeasonDivisionTeam() {
+		return new SeasonDivisionTeamImpl();
+	}
+
+	@Override
 	public SeasonDivisionTeam createSeasonDivisionTeam(SeasonDivision seasonDivision, Team team) {
 		SeasonDivisionTeam seasonDivisionTeam = new SeasonDivisionTeamImpl();
 		seasonDivisionTeam.setSeasonDivision(seasonDivision);
@@ -53,7 +78,21 @@ public class DomainObjectFactoryImpl implements DomainObjectFactory {
 		return seasonDivisionTeam;
 	}
 
-	
+	@Override
+	public TeamStatistic createTeamStatistic() {
+		return new TeamStatisticImpl();
+	}
+
+	@Override
+	public TeamStatistic createTeamStatistic(SeasonDivisionTeam seasonDivisionTeam, Calendar fixtureDate) {
+		return new TeamStatisticImpl(seasonDivisionTeam, fixtureDate);
+	}
+
+	@Override
+	public Fixture createFixture() {
+		return new FixtureImpl();
+	}
+
 	@Override
 	public Fixture createFixture(Season season, Team homeTeam, Team awayTeam) {
 		Fixture fixture = new FixtureImpl ();
@@ -71,11 +110,6 @@ public class DomainObjectFactoryImpl implements DomainObjectFactory {
 	@Override
 	public TeamMapping createTeamMapping (String dialect, Integer sourceId, Integer fraId) {
 		return new TeamMappingImpl (dialect, sourceId, fraId);
-	}
-
-	@Override
-	public TeamStatistic createTeamStatistic(SeasonDivisionTeam seasonDivisionTeam, Calendar fixtureDate) {
-		return new TeamStatisticImpl(seasonDivisionTeam, fixtureDate);
 	}
 
 	@Override

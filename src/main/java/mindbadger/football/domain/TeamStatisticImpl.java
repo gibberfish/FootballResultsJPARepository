@@ -5,7 +5,7 @@ import java.util.Calendar;
 
 @Entity
 @Table(name = "team_statistic")
-@IdClass(SeasonDivisionTeamFixtureDateId.class)
+@IdClass(TeamStatisticId.class)
 public class TeamStatisticImpl implements TeamStatistic {
     private static final long serialVersionUID = 1L;
 
@@ -38,6 +38,7 @@ public class TeamStatisticImpl implements TeamStatistic {
     @Column(name = "statistic")
     private String statistic;
 
+    @Column(name = "value")
     private Integer value;
 
 //    @Override

@@ -11,7 +11,7 @@ import mindbadger.football.domain.Team;
 import mindbadger.football.domain.TeamImpl;
 import mindbadger.football.repository.AbstractTeamRepository;
 
-@Component
+@Component ("teamRepository")
 public class TeamRepositoryImpl extends AbstractTeamRepository {
 	@Autowired
 	private TeamCrudRepository teamCrudRepository;

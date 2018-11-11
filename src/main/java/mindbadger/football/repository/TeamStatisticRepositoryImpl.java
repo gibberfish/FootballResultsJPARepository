@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-@Component
+@Component ("teamStatisticRepository")
 public class TeamStatisticRepositoryImpl extends AbstractTeamStatisticRepository {
     @Autowired
     TeamStatisticCrudRepository teamStatisticCrudRepository;
