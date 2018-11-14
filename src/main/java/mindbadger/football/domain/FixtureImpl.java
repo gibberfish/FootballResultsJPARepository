@@ -4,17 +4,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import mindbadger.football.domain.Division;
 import mindbadger.football.domain.Fixture;
@@ -43,55 +33,79 @@ public class FixtureImpl implements Fixture, Serializable {
 	@JoinColumn(name = "away_team_id", referencedColumnName="team_id")
 	private Team awayTeam;
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=SeasonImpl.class)
-	@JoinColumn(name = "ssn_num", referencedColumnName="ssn_num")
-	private Season season;
-
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=DivisionImpl.class)
-	@JoinColumn(name = "div_id", referencedColumnName="div_id")
-	private Division division;
+	@JoinColumns({
+			@JoinColumn(name="ssn_num", referencedColumnName="ssn_num"),
+			@JoinColumn(name="div_id", referencedColumnName="div_id")
+	})
+	@ManyToOne(targetEntity=SeasonDivisionImpl.class)//, cascade=CascadeType.DETACH)
+	private SeasonDivision seasonDivision;
 
 	@Column(name = "home_goals")
 	private Integer homeGoals;
 
 	@Column(name = "away_goals")
 	private Integer awayGoals;
-	
+
 	@Override
 	public String getFixtureId() {
 		return this.fixtureId;
 	}
-	
+
 	@Override
-	public Season getSeason() {
-		return this.season;
+	public void setFixtureId(String fixtureId) {
+		this.fixtureId = fixtureId;
 	}
-	
+
 	@Override
-	public Calendar getFixtureDate() {
-		return this.fixtureDate;
+	public void setSeasonDivision(SeasonDivision seasonDivision) {
+		this.seasonDivision = seasonDivision;
 	}
-	
+
+	@Override
+	public SeasonDivision getSeasonDivision() {
+		return this.seasonDivision;
+	}
+
 	@Override
 	public Team getHomeTeam() {
 		return this.homeTeam;
 	}
-	
+
+	@Override
+	public void setHomeTeam(Team homeTeam) {
+		this.homeTeam = homeTeam;
+	}
+
 	@Override
 	public Team getAwayTeam() {
 		return this.awayTeam;
 	}
-	
+
 	@Override
-	public Division getDivision() {
-		return this.division;
+	public void setAwayTeam(Team awayTeam) {
+		this.awayTeam = awayTeam;
 	}
-	
+
+	@Override
+	public Calendar getFixtureDate() {
+		return this.fixtureDate;
+	}
+
+	@Override
+	public void setFixtureDate(Calendar fixtureDate) {
+		this.fixtureDate = fixtureDate;
+	}
+
 	@Override
 	public Integer getHomeGoals() {
 		return this.homeGoals;
 	}
-	
+
+	@Override
+	public void setHomeGoals(Integer homeGoals) {
+		this.homeGoals = homeGoals;
+	}
+
 	@Override
 	public Integer getAwayGoals() {
 		return this.awayGoals;
@@ -103,51 +117,19 @@ public class FixtureImpl implements Fixture, Serializable {
 	}
 
 	@Override
-	public void setAwayTeam(Team awayTeam) {
-		this.awayTeam = awayTeam;
-	}
-
-	@Override
-	public void setDivision(Division division) {
-		this.division = division;
-	}
-
-	@Override
-	public void setFixtureDate(Calendar fixtureDate) {
-		this.fixtureDate = fixtureDate;
-	}
-
-	@Override
-	public void setFixtureId(String fixtureId) {
-		this.fixtureId = fixtureId;
-	}
-
-	@Override
-	public void setHomeGoals(Integer homeGoals) {
-		this.homeGoals = homeGoals;
-	}
-
-	@Override
-	public void setHomeTeam(Team homeTeam) {
-		this.homeTeam = homeTeam;
-	}
-
-	@Override
-	public void setSeason(Season season) {
-		this.season = season;
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(fixtureId);
 	}
 
 	@Override
 	public String toString() {
-		Integer ssnNum = (season == null ? null : season.getSeasonNumber());
+		Integer ssnNum = (seasonDivision != null & seasonDivision.getSeason() != null ?
+				seasonDivision.getSeason().getSeasonNumber() : null);
+		String divId = (seasonDivision != null & seasonDivision.getDivision() != null ?
+				seasonDivision.getDivision().getDivisionId() : "");
 		String hmTeam = (homeTeam == null ? "" : homeTeam.getTeamId());
 		String awTeam = (awayTeam == null ? "" : awayTeam.getTeamId());
-		return "Fixture[ssn:"+ssnNum+",hmTm:"+hmTeam+",awTm:"+awTeam+"]";
+		return "Fixture[ssn:"+ssnNum+",div:"+divId+",hmTm:"+hmTeam+",awTm:"+awTeam+"]";
 	}
 
 	@Override

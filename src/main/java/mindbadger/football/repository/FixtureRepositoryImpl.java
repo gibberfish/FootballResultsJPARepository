@@ -57,17 +57,17 @@ public class FixtureRepositoryImpl extends AbstractFixtureRepository {
 
 	@Override
 	public List<Fixture> getFixturesForDivisionInSeason(SeasonDivision seasonDivision) {
-		return fixtureCrudRepository.getFixturesForDivisionInSeason(seasonDivision.getSeason(),	seasonDivision.getDivision());
+		return fixtureCrudRepository.getFixturesForDivisionInSeason(seasonDivision);
 	}
 
 	@Override
 	public List<Fixture> getFixturesForDivisionInSeasonOnDate(SeasonDivision seasonDivision, Calendar fixtureDate) {
-		return fixtureCrudRepository.getFixturesForDivisionInSeasonOnDate(seasonDivision.getSeason(), seasonDivision.getDivision(), fixtureDate);
+		return fixtureCrudRepository.getFixturesForDivisionInSeasonOnDate(seasonDivision, fixtureDate);
 	}
 
 	@Override
 	public List<Fixture> getFixturesForTeamInDivisionInSeason(SeasonDivision seasonDivision, Team team) {
-		return fixtureCrudRepository.getFixturesForTeamInDivisionInSeason(seasonDivision.getSeason(), seasonDivision.getDivision(), team);
+		return fixtureCrudRepository.getFixturesForTeamInDivisionInSeason(seasonDivision, team);
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class FixtureRepositoryImpl extends AbstractFixtureRepository {
 	}
 
 	@Override
-	public Fixture getExistingFixture(Season season, Team homeTeam, Team awayTeam) {
-		return fixtureCrudRepository.getExistingFixture(season,	homeTeam, awayTeam);
+	public Fixture getExistingFixture(SeasonDivision seasonDivision, Team homeTeam, Team awayTeam) {
+		return fixtureCrudRepository.getExistingFixture(seasonDivision,	homeTeam, awayTeam);
 	}
 
 	@Override

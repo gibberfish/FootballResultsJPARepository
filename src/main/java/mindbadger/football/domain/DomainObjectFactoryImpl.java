@@ -94,9 +94,9 @@ public class DomainObjectFactoryImpl implements DomainObjectFactory {
 	}
 
 	@Override
-	public Fixture createFixture(Season season, Team homeTeam, Team awayTeam) {
+	public Fixture createFixture(SeasonDivision seasonDivision, Team homeTeam, Team awayTeam) {
 		Fixture fixture = new FixtureImpl ();
-		fixture.setSeason(season);
+		fixture.setSeasonDivision(seasonDivision);
 		fixture.setHomeTeam(homeTeam);
 		fixture.setAwayTeam(awayTeam);
 		return fixture;
