@@ -84,8 +84,9 @@ public class DomainObjectFactoryImpl implements DomainObjectFactory {
 	}
 
 	@Override
-	public TeamStatistic createTeamStatistic(SeasonDivisionTeam seasonDivisionTeam, Calendar fixtureDate) {
-		return new TeamStatisticImpl(seasonDivisionTeam, fixtureDate);
+	public TeamStatistic createTeamStatistic(SeasonDivisionTeam seasonDivisionTeam, Calendar fixtureDate,
+											 String statistic) {
+		return new TeamStatisticImpl(seasonDivisionTeam, fixtureDate, statistic);
 	}
 
 	@Override

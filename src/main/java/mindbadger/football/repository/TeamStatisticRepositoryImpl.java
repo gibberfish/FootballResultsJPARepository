@@ -1,8 +1,6 @@
 package mindbadger.football.repository;
 
-import mindbadger.football.domain.SeasonDivisionTeam;
-import mindbadger.football.domain.TeamStatistic;
-import mindbadger.football.domain.TeamStatisticImpl;
+import mindbadger.football.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +13,11 @@ public class TeamStatisticRepositoryImpl extends AbstractTeamStatisticRepository
 
     @Override
     public List<TeamStatistic> findTeamStatisticsForSeasonDivisionTeamOnDate(SeasonDivisionTeam seasonDivisionTeam, Calendar fixtureDate) {
-        return teamStatisticCrudRepository.findTeamStatisticsForSeasonDivisionTeamOnDate(seasonDivisionTeam, fixtureDate);
+        return teamStatisticCrudRepository.findTeamStatisticsForSeasonDivisionTeamOnDate(
+                seasonDivisionTeam.getSeasonDivision().getSeason(),
+                seasonDivisionTeam.getSeasonDivision().getDivision(),
+                seasonDivisionTeam.getTeam(),
+                fixtureDate);
     }
 
     @Override
@@ -24,7 +26,15 @@ public class TeamStatisticRepositoryImpl extends AbstractTeamStatisticRepository
     }
 
     @Override
-    public TeamStatistic findOne(String teamStatisticId) {
+    public TeamStatistic findOne(TeamStatisticId teamStatisticId) {
+
+        System.out.println(">>>>>>>>>>>>>> SEASON: " + teamStatisticId.getSeason());
+        System.out.println(">>>>>>>>>>>>>> DIVISION: " + teamStatisticId.getDivision());
+        System.out.println(">>>>>>>>>>>>>> TEAM: " + teamStatisticId.getTeam());
+        System.out.println(">>>>>>>>>>>>>> FIXTURE DATE: " + teamStatisticId.getFixtureDate());
+        System.out.println(">>>>>>>>>>>>>> STAT: " + teamStatisticId.getStatistic());
+
+
         return (teamStatisticId == null ? null : teamStatisticCrudRepository.findOne(teamStatisticId));
     }
 
@@ -46,5 +56,24 @@ public class TeamStatisticRepositoryImpl extends AbstractTeamStatisticRepository
             }
 
             return allTeamStatistics;
+    }
+
+    @Override
+    public TeamStatisticId getIDFor(TeamStatistic teamStatistic) {
+        SeasonDivisionId seasonDivisionId = new SeasonDivisionId(
+                teamStatistic.getSeason().getSeasonNumber(),
+                teamStatistic.getDivision().getDivisionId()
+                );
+
+        SeasonDivisionTeamId seasonDivisionTeamId = new SeasonDivisionTeamId(
+                seasonDivisionId,
+                teamStatistic.getTeam().getTeamId()
+                );
+
+        return new TeamStatisticId(seasonDivisionTeamId.getSeasonDivision().getSeason(),
+                seasonDivisionTeamId.getSeasonDivision().getDivision(),
+                seasonDivisionTeamId.getTeam(),
+                teamStatistic.getFixtureDate(),
+                teamStatistic.getStatistic());
     }
 }

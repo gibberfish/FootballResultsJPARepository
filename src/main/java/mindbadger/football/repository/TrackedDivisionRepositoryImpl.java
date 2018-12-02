@@ -4,11 +4,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import mindbadger.football.domain.TrackedDivisionId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import mindbadger.football.domain.TrackedDivision;
-import mindbadger.football.domain.TrackedDivisionId;
 import mindbadger.football.domain.TrackedDivisionImpl;
 
 @Component

@@ -35,6 +35,21 @@ public class SeasonDivisionImpl implements SeasonDivision, Serializable {
 		this.divisionPosition = divisionPosition;
 	}
 
+
+
+//	@Id
+//	@Column (name = "ssn_num")
+////	private Integer seasonNumber;
+//	public Integer seasonNumber() {	return season == null ? null : season.getSeasonNumber();}
+//	//public void setSeasonNumber(Integer seasonNumber) {this.seasonNumber = seasonNumber;}
+//	@Id
+//	@Column (name = "div_id")
+////	private String divisionId;
+//	public String divisionId() {return division == null ? null : division.getDivisionId();}
+//	//public void setDivisionId(String divisionId) {this.divisionId = divisionId;	}
+
+
+
 	@JsonManagedReference
 	@Id
 	@ManyToOne(targetEntity=SeasonImpl.class)

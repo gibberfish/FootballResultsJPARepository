@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import mindbadger.football.domain.MappingId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import mindbadger.football.domain.DivisionMapping;
 import mindbadger.football.domain.DivisionMappingImpl;
-import mindbadger.football.domain.MappingId;
 
 @Component
 public class DivisionMappingRepositoryImpl implements DivisionMappingRepository {
