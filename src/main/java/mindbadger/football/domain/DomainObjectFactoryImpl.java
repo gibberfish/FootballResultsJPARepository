@@ -104,13 +104,28 @@ public class DomainObjectFactoryImpl implements DomainObjectFactory {
 	}
 
 	@Override
+	public DivisionMapping createDivisionMapping() {
+		return new DivisionMappingImpl();
+	}
+
+	@Override
 	public DivisionMapping createDivisionMapping (String dialect, Integer sourceId, Integer fraId) {
 		return new DivisionMappingImpl (dialect, sourceId, fraId);
 	}
 
 	@Override
+	public TeamMapping createTeamMapping() {
+		return new TeamMappingImpl();
+	}
+
+	@Override
 	public TeamMapping createTeamMapping (String dialect, Integer sourceId, Integer fraId) {
 		return new TeamMappingImpl (dialect, sourceId, fraId);
+	}
+
+	@Override
+	public TrackedDivision createTrackedDivision() {
+		return new TrackedDivisionImpl();
 	}
 
 	@Override

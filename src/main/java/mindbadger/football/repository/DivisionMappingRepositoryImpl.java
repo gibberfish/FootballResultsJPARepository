@@ -37,15 +37,15 @@ public class DivisionMappingRepositoryImpl implements DivisionMappingRepository 
 	}
 
 	@Override
-	public DivisionMapping findOne(DivisionMapping divisionMapping) {
-		if (divisionMapping == null) return null;
+	public DivisionMapping findOne(MappingId divisionMappingId) {
+		if (divisionMappingId == null) return null;
 		
-		MappingId mappingId = new MappingId ();
-		mappingId.setDialect(divisionMapping.getDialect());
-		mappingId.setSourceId(divisionMapping.getSourceId());
-		mappingId.setFraId(divisionMapping.getFraId());
+//		MappingId mappingId = new MappingId ();
+//		mappingId.setDialect(divisionMappingId.getDialect());
+//		mappingId.setSourceId(divisionMappingId.getSourceId());
+//		mappingId.setFraId(divisionMappingId.getFraId());
 		
-		return divisionMappingCrudRepository.findOne(mappingId);
+		return divisionMappingCrudRepository.findOne(divisionMappingId);
 	}
 
 	@Override

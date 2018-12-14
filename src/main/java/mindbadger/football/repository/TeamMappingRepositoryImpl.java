@@ -37,15 +37,15 @@ public class TeamMappingRepositoryImpl implements TeamMappingRepository {
 	}
 
 	@Override
-	public TeamMapping findOne(TeamMapping teamMapping) {
-		if (teamMapping == null) return null;
+	public TeamMapping findOne(MappingId teamMappingId) {
+		if (teamMappingId == null) return null;
 		
-		MappingId mappingId = new MappingId ();
-		mappingId.setDialect(teamMapping.getDialect());
-		mappingId.setSourceId(teamMapping.getSourceId());
-		mappingId.setFraId(teamMapping.getFraId());
+//		MappingId mappingId = new MappingId ();
+//		mappingId.setDialect(teamMappingId.getDialect());
+//		mappingId.setSourceId(teamMappingId.getSourceId());
+//		mappingId.setFraId(teamMappingId.getFraId());
 		
-		return teamMappingCrudRepository.findOne(mappingId);
+		return teamMappingCrudRepository.findOne(teamMappingId);
 	}
 
 	@Override
