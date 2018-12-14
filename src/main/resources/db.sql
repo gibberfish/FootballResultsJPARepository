@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `football` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `football`;
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.24, for Linux (x86_64)
 --
--- Host: localhost    Database: football
+-- Host: 127.0.0.1    Database: football
 -- ------------------------------------------------------
--- Server version	5.6.34-log
+-- Server version	5.7.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,7 +29,7 @@ CREATE TABLE `division` (
   `div_name` varchar(50) COLLATE latin1_bin NOT NULL,
   PRIMARY KEY (`div_id`),
   UNIQUE KEY `div_name` (`div_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=754 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `fixture` (
   CONSTRAINT `fixture_div_fk` FOREIGN KEY (`div_id`) REFERENCES `division` (`div_id`),
   CONSTRAINT `fixture_h_tm_fk` FOREIGN KEY (`home_team_id`) REFERENCES `team` (`team_id`),
   CONSTRAINT `fixture_ssn_fk` FOREIGN KEY (`ssn_num`) REFERENCES `season` (`ssn_num`)
-) ENGINE=InnoDB AUTO_INCREMENT=407914 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=412529 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,7 +166,7 @@ CREATE TABLE `team` (
   `team_short_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`team_id`),
   UNIQUE KEY `team_name` (`team_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1302 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,6 +181,26 @@ CREATE TABLE `team_mapping` (
   `source_id` int(11) NOT NULL,
   `fra_id` int(11) NOT NULL,
   PRIMARY KEY (`dialect`,`source_id`,`fra_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `team_statistic`
+--
+
+DROP TABLE IF EXISTS `team_statistic`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `team_statistic` (
+  `ssn_num` int(10) NOT NULL,
+  `div_id` int(10) NOT NULL,
+  `team_id` int(10) NOT NULL,
+  `fixture_date` date NOT NULL,
+  `statistic` varchar(30) NOT NULL,
+  `value` int(10) NOT NULL,
+  PRIMARY KEY (`ssn_num`,`div_id`,`team_id`,`fixture_date`,`statistic`),
+  KEY `team_statistic_ssn_div_tm_fk` (`ssn_num`,`div_id`,`team_id`),
+  CONSTRAINT `team_statistic_ssn_div_tm_fk` FOREIGN KEY (`ssn_num`, `div_id`, `team_id`) REFERENCES `season_division_team` (`ssn_num`, `div_id`, `team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -207,4 +227,4 @@ CREATE TABLE `tracked_division` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-01 10:22:21
+-- Dump completed on 2018-12-04  3:51:06
