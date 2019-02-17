@@ -27,7 +27,7 @@ public class FixtureRepositoryImpl extends AbstractFixtureRepository {
 
 	@Override
 	public Fixture findOne(String fixtureId) {
-		return (fixtureId == null ? null : fixtureCrudRepository.findOne(fixtureId));
+		return (fixtureId == null ? null : fixtureCrudRepository.findById(fixtureId).get());
 	}
 
 	@Override

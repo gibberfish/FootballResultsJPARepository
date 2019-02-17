@@ -45,7 +45,7 @@ public class TrackedDivisionRepositoryImpl implements TrackedDivisionRepository 
 //		trackedDivisionId.setDialect(trackedDivisionId.getDialect());
 //		trackedDivisionId.setSourceId(trackedDivisionId.getSourceId());
 		
-		return trackedDivisionCrudRepository.findOne(trackedDivisionId);
+		return trackedDivisionCrudRepository.findById(trackedDivisionId).get();
 	}
 	
 	@Override

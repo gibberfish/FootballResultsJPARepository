@@ -12,6 +12,7 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
+import org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
@@ -23,9 +24,8 @@ import org.springframework.transaction.jta.JtaTransactionManager;
 @EnableAutoConfiguration 
 public class RepositoryConfiguration extends JpaBaseConfiguration {
 
-	protected RepositoryConfiguration(DataSource dataSource, JpaProperties properties,
-			ObjectProvider<JtaTransactionManager> jtaTransactionManagerProvider) {
-		super(dataSource, properties, jtaTransactionManagerProvider);
+	protected RepositoryConfiguration(DataSource dataSource, JpaProperties properties, ObjectProvider<JtaTransactionManager> jtaTransactionManager, ObjectProvider<TransactionManagerCustomizers> transactionManagerCustomizers) {
+		super(dataSource, properties, jtaTransactionManager, transactionManagerCustomizers);
 	}
 
 	@Override

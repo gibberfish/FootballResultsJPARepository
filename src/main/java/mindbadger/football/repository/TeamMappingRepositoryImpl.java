@@ -45,7 +45,7 @@ public class TeamMappingRepositoryImpl implements TeamMappingRepository {
 //		mappingId.setSourceId(teamMappingId.getSourceId());
 //		mappingId.setFraId(teamMappingId.getFraId());
 		
-		return teamMappingCrudRepository.findOne(teamMappingId);
+		return teamMappingCrudRepository.findById(teamMappingId).get();
 	}
 
 	@Override

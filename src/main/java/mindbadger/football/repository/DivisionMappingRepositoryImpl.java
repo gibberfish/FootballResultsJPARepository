@@ -45,7 +45,7 @@ public class DivisionMappingRepositoryImpl implements DivisionMappingRepository 
 //		mappingId.setSourceId(divisionMappingId.getSourceId());
 //		mappingId.setFraId(divisionMappingId.getFraId());
 		
-		return divisionMappingCrudRepository.findOne(divisionMappingId);
+		return divisionMappingCrudRepository.findById(divisionMappingId).get();
 	}
 
 	@Override

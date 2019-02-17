@@ -35,7 +35,7 @@ public class TeamStatisticRepositoryImpl extends AbstractTeamStatisticRepository
         System.out.println(">>>>>>>>>>>>>> STAT: " + teamStatisticId.getStatistic());
 
 
-        return (teamStatisticId == null ? null : teamStatisticCrudRepository.findOne(teamStatisticId));
+        return (teamStatisticId == null ? null : teamStatisticCrudRepository.findById(teamStatisticId).get());
     }
 
     @Override

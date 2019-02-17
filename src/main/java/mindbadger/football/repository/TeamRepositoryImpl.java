@@ -23,7 +23,7 @@ public class TeamRepositoryImpl extends AbstractTeamRepository {
 
 	@Override
 	public Team findOne(String teamId) {
-		return (teamId == null ? null : teamCrudRepository.findOne(teamId));
+		return (teamId == null ? null : teamCrudRepository.findById(teamId).get());
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
 import mindbadger.football.domain.Season;
@@ -23,14 +25,14 @@ public class SeasonRepositoryImpl extends AbstractSeasonRepository {
 
 	@Override
 	public Season findOne(Integer seasonId) {
-		return (seasonId == null ? null : seasonCrudRepository.findOne(seasonId));
+		return (seasonId == null ? null : seasonCrudRepository.findById(seasonId).get());
 	}
 
 	@Override
 	public Season save(Season season) {
 		return seasonCrudRepository.save((SeasonImpl)season);
 	}
-	
+
 	@Override
 	public Iterable<Season> findAll() {
 		Iterable<SeasonImpl> allSeasonImpls = seasonCrudRepository.findAll();

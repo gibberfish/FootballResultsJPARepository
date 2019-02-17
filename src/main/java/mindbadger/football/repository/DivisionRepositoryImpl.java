@@ -23,7 +23,7 @@ public class DivisionRepositoryImpl extends AbstractDivisionRepository {
 
 	@Override
 	public Division findOne(String divisionId) {
-		return (divisionId == null ? null : divisionCrudRepository.findOne(divisionId));
+		return (divisionId == null ? null : divisionCrudRepository.findById(divisionId).get());
 	}
 
 	@Override
