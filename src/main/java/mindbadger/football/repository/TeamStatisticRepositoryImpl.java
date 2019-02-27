@@ -28,14 +28,16 @@ public class TeamStatisticRepositoryImpl extends AbstractTeamStatisticRepository
     @Override
     public TeamStatistic findOne(TeamStatisticId teamStatisticId) {
 
+        if (teamStatisticId == null) return null;
+        Optional<TeamStatisticImpl> optional = teamStatisticCrudRepository.findById(teamStatisticId);
+
         System.out.println(">>>>>>>>>>>>>> SEASON: " + teamStatisticId.getSeason());
         System.out.println(">>>>>>>>>>>>>> DIVISION: " + teamStatisticId.getDivision());
         System.out.println(">>>>>>>>>>>>>> TEAM: " + teamStatisticId.getTeam());
         System.out.println(">>>>>>>>>>>>>> FIXTURE DATE: " + teamStatisticId.getFixtureDate());
         System.out.println(">>>>>>>>>>>>>> STAT: " + teamStatisticId.getStatistic());
 
-
-        return (teamStatisticId == null ? null : teamStatisticCrudRepository.findById(teamStatisticId).get());
+        return (optional == null || !optional.isPresent() ? null : optional.get());
     }
 
     @Override

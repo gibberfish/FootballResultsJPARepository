@@ -2,6 +2,7 @@ package mindbadger.football.repository;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,9 @@ public class DivisionRepositoryImpl extends AbstractDivisionRepository {
 
 	@Override
 	public Division findOne(String divisionId) {
-		return (divisionId == null ? null : divisionCrudRepository.findById(divisionId).get());
+		if (divisionId == null) return null;
+		Optional<DivisionImpl> divisionOptional = divisionCrudRepository.findById(divisionId);
+		return (divisionOptional == null || !divisionOptional.isPresent() ? null : divisionOptional.get());
 	}
 
 	@Override

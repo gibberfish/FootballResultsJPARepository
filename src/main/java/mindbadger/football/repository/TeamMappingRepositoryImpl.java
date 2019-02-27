@@ -2,6 +2,7 @@ package mindbadger.football.repository;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Set;
 
 import mindbadger.football.domain.MappingId;
@@ -39,13 +40,8 @@ public class TeamMappingRepositoryImpl implements TeamMappingRepository {
 	@Override
 	public TeamMapping findOne(MappingId teamMappingId) {
 		if (teamMappingId == null) return null;
-		
-//		MappingId mappingId = new MappingId ();
-//		mappingId.setDialect(teamMappingId.getDialect());
-//		mappingId.setSourceId(teamMappingId.getSourceId());
-//		mappingId.setFraId(teamMappingId.getFraId());
-		
-		return teamMappingCrudRepository.findById(teamMappingId).get();
+		Optional<TeamMappingImpl> optional = teamMappingCrudRepository.findById(teamMappingId);
+		return (optional == null || !optional.isPresent() ? null : optional.get());
 	}
 
 	@Override

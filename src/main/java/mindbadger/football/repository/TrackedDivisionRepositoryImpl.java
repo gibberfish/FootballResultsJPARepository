@@ -2,6 +2,7 @@ package mindbadger.football.repository;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Set;
 
 import mindbadger.football.domain.TrackedDivisionId;
@@ -40,12 +41,8 @@ public class TrackedDivisionRepositoryImpl implements TrackedDivisionRepository 
 	@Override
 	public TrackedDivision findOne(TrackedDivisionId trackedDivisionId) {
 		if (trackedDivisionId == null) return null;
-		
-//		TrackedDivisionId trackedDivisionId = new TrackedDivisionId ();
-//		trackedDivisionId.setDialect(trackedDivisionId.getDialect());
-//		trackedDivisionId.setSourceId(trackedDivisionId.getSourceId());
-		
-		return trackedDivisionCrudRepository.findById(trackedDivisionId).get();
+		Optional<TrackedDivisionImpl> optional = trackedDivisionCrudRepository.findById(trackedDivisionId);
+		return (optional == null || !optional.isPresent() ? null : optional.get());
 	}
 	
 	@Override

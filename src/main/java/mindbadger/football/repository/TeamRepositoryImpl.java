@@ -2,6 +2,7 @@ package mindbadger.football.repository;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,9 @@ public class TeamRepositoryImpl extends AbstractTeamRepository {
 
 	@Override
 	public Team findOne(String teamId) {
-		return (teamId == null ? null : teamCrudRepository.findById(teamId).get());
+		if (teamId == null) return null;
+		Optional<TeamImpl> optional = teamCrudRepository.findById(teamId);
+		return (optional == null || !optional.isPresent() ? null : optional.get());
 	}
 
 	@Override

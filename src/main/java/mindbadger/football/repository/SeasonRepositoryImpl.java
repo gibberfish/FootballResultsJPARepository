@@ -2,6 +2,7 @@ package mindbadger.football.repository;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,9 @@ public class SeasonRepositoryImpl extends AbstractSeasonRepository {
 
 	@Override
 	public Season findOne(Integer seasonId) {
-		return (seasonId == null ? null : seasonCrudRepository.findById(seasonId).get());
+		if (seasonId == null) return null;
+		Optional<SeasonImpl> optional = seasonCrudRepository.findById(seasonId);
+		return (optional == null || !optional.isPresent() ? null : optional.get());
 	}
 
 	@Override

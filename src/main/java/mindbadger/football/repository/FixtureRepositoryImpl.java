@@ -1,10 +1,6 @@
 package mindbadger.football.repository;
 
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +23,9 @@ public class FixtureRepositoryImpl extends AbstractFixtureRepository {
 
 	@Override
 	public Fixture findOne(String fixtureId) {
-		return (fixtureId == null ? null : fixtureCrudRepository.findById(fixtureId).get());
+		if (fixtureId == null) return null;
+		Optional<FixtureImpl> optional = fixtureCrudRepository.findById(fixtureId);
+		return (optional == null || !optional.isPresent() ? null : optional.get());
 	}
 
 	@Override
