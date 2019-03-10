@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component ("teamStatisticRepository")
 public class TeamStatisticRepositoryImpl extends AbstractTeamStatisticRepository {
@@ -46,21 +47,6 @@ public class TeamStatisticRepositoryImpl extends AbstractTeamStatisticRepository
     }
 
     @Override
-    public Iterable<TeamStatistic> findAll() {
-            Iterable<TeamStatisticImpl> allTeamStatisticImpls = teamStatisticCrudRepository.findAll();
-            Set<TeamStatistic> allTeamStatistics = new HashSet<>();
-
-            Iterator<TeamStatisticImpl> iterator = allTeamStatisticImpls.iterator();
-
-            while (iterator.hasNext()) {
-                TeamStatisticImpl teamStatisticImpl = iterator.next();
-                allTeamStatistics.add(teamStatisticImpl);
-            }
-
-            return allTeamStatistics;
-    }
-
-    @Override
     public TeamStatisticId getIDFor(TeamStatistic teamStatistic) {
         SeasonDivisionId seasonDivisionId = new SeasonDivisionId(
                 teamStatistic.getSeason().getSeasonNumber(),
@@ -77,5 +63,18 @@ public class TeamStatisticRepositoryImpl extends AbstractTeamStatisticRepository
                 seasonDivisionTeamId.getTeam(),
                 teamStatistic.getFixtureDate(),
                 teamStatistic.getStatistic());
+    }
+
+    @Override
+    public List<TeamStatistic> findAll() {
+        List<? extends TeamStatistic> teamStatistics = teamStatisticCrudRepository.findAll();
+        return (List<TeamStatistic>) teamStatistics;
+    }
+
+    @Override
+    public List<? extends TeamStatistic> saveAll(List<? extends TeamStatistic> teamStatistics) {
+        return teamStatisticCrudRepository.saveAll(teamStatistics.stream()
+                .filter(obj -> obj instanceof TeamStatisticImpl)
+                .map(obj -> (TeamStatisticImpl) obj).collect(Collectors.toList()));
     }
 }

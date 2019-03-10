@@ -1,9 +1,7 @@
 package mindbadger.football.repository;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -37,17 +35,15 @@ public class SeasonRepositoryImpl extends AbstractSeasonRepository {
 	}
 
 	@Override
-	public Iterable<Season> findAll() {
-		Iterable<SeasonImpl> allSeasonImpls = seasonCrudRepository.findAll();
-		Set<Season> allSeasons = new HashSet<Season> ();
-		
-		Iterator<SeasonImpl> iterator = allSeasonImpls.iterator();
-		
-		while (iterator.hasNext()) {
-			SeasonImpl seasonImpl = iterator.next();
-			allSeasons.add(seasonImpl);
-		}
-		
-		return allSeasons;
+	public List<Season> findAll() {
+		List<? extends Season> seasons = seasonCrudRepository.findAll();
+		return (List<Season>) seasons;
+	}
+
+	@Override
+	public List<? extends Season> saveAll(List<? extends Season> seasons) {
+		return seasonCrudRepository.saveAll(seasons.stream()
+				.filter(obj -> obj instanceof SeasonImpl)
+				.map(obj -> (SeasonImpl) obj).collect(Collectors.toList()));
 	}
 }

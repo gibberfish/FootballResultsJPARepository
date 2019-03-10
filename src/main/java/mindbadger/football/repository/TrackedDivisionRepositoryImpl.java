@@ -1,9 +1,7 @@
 package mindbadger.football.repository;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import mindbadger.football.domain.TrackedDivisionId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,34 +22,32 @@ public class TrackedDivisionRepositoryImpl implements TrackedDivisionRepository 
 	}
 	
 	@Override
-	public Iterable<TrackedDivision> findAll() {
-		Iterable<TrackedDivisionImpl> allTrackedDivisionImpls = trackedDivisionCrudRepository.findAll();
-		Set<TrackedDivision> allTrackedDivisions = new HashSet<TrackedDivision> ();
-		
-		Iterator<TrackedDivisionImpl> iterator = allTrackedDivisionImpls.iterator();
-		
-		while (iterator.hasNext()) {
-			TrackedDivisionImpl trackedDivisionImpl = iterator.next();
-			allTrackedDivisions.add(trackedDivisionImpl);
-		}
-		
-		return allTrackedDivisions;
-	}
-	
-	@Override
 	public TrackedDivision findOne(TrackedDivisionId trackedDivisionId) {
 		if (trackedDivisionId == null) return null;
 		Optional<TrackedDivisionImpl> optional = trackedDivisionCrudRepository.findById(trackedDivisionId);
 		return (optional == null || !optional.isPresent() ? null : optional.get());
 	}
-	
+
 	@Override
 	public TrackedDivision save(TrackedDivision trackedDivision) {
 		return trackedDivisionCrudRepository.save((TrackedDivisionImpl)trackedDivision);
 	}
-	
+
+	@Override
+	public List<TrackedDivision> findAll() {
+		List<? extends TrackedDivision> divisions = trackedDivisionCrudRepository.findAll();
+		return (List<TrackedDivision>) divisions;
+	}
+
+	@Override
+	public List<? extends TrackedDivision> saveAll(List<? extends TrackedDivision> divisions) {
+		return trackedDivisionCrudRepository.saveAll(divisions.stream()
+				.filter(obj -> obj instanceof TrackedDivisionImpl)
+				.map(obj -> (TrackedDivisionImpl) obj).collect(Collectors.toList()));
+	}
+
 	/* vvvvvvvvvvvvvvvvvvvvvv NOT IMPLEMENTED vvvvvvvvvvvvvvvvvvvvv */
-	
+
 	@Override
 	public TrackedDivision createOrUpdate(TrackedDivision trackedDivision) {
 		throw new RuntimeException("This method is not implemented for TrackedDivisions");

@@ -1,9 +1,7 @@
 package mindbadger.football.repository;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,22 +33,20 @@ public class DivisionRepositoryImpl extends AbstractDivisionRepository {
 	}
 
 	@Override
-	public Iterable<Division> findAll() {
-		Iterable<DivisionImpl> allDivisionImpls = divisionCrudRepository.findAll();
-		Set<Division> allDivisions = new HashSet<Division> ();
-		
-		Iterator<DivisionImpl> iterator = allDivisionImpls.iterator();
-		
-		while (iterator.hasNext()) {
-			DivisionImpl divisionImpl = iterator.next();
-			allDivisions.add(divisionImpl);
-		}
-		
-		return allDivisions;
+	public Division findDivisionByName(String name) {
+		return divisionCrudRepository.findDivisionByName (name);
 	}
 
 	@Override
-	public Division findDivisionByName(String name) {
-		return divisionCrudRepository.findDivisionByName (name);
+	public List<Division> findAll() {
+		List<? extends Division> divisions = divisionCrudRepository.findAll();
+		return (List<Division>) divisions;
+	}
+
+	@Override
+	public List<? extends Division> saveAll(List<? extends Division> divisions) {
+		return divisionCrudRepository.saveAll(divisions.stream()
+				.filter(obj -> obj instanceof DivisionImpl)
+				.map(obj -> (DivisionImpl) obj).collect(Collectors.toList()));
 	}
 }

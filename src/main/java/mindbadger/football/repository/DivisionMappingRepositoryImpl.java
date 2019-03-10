@@ -1,9 +1,7 @@
 package mindbadger.football.repository;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import mindbadger.football.domain.MappingId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +21,6 @@ public class DivisionMappingRepositoryImpl implements DivisionMappingRepository 
 	}
 
 	@Override
-	public Iterable<DivisionMapping> findAll() {
-		Iterable<DivisionMappingImpl> allDivisionMappingImpls = divisionMappingCrudRepository.findAll();
-		Set<DivisionMapping> allDivisionMappings = new HashSet<DivisionMapping> ();
-		
-		Iterator<DivisionMappingImpl> iterator = allDivisionMappingImpls.iterator();
-		
-		while (iterator.hasNext()) {
-			DivisionMappingImpl divisionMappingImpl = iterator.next();
-			allDivisionMappings.add(divisionMappingImpl);
-		}
-		
-		return allDivisionMappings;
-	}
-
-	@Override
 	public DivisionMapping findOne(MappingId divisionMappingId) {
 		if (divisionMappingId == null) return null;
 		Optional<DivisionMappingImpl> optional = divisionMappingCrudRepository.findById(divisionMappingId);
@@ -47,6 +30,19 @@ public class DivisionMappingRepositoryImpl implements DivisionMappingRepository 
 	@Override
 	public DivisionMapping save(DivisionMapping divisionMapping) {
 		return divisionMappingCrudRepository.save((DivisionMappingImpl)divisionMapping);
+	}
+
+	@Override
+	public List<DivisionMapping> findAll() {
+		List<? extends DivisionMapping> divisionMappings = divisionMappingCrudRepository.findAll();
+		return (List<DivisionMapping>) divisionMappings;
+	}
+
+	@Override
+	public List<? extends DivisionMapping> saveAll(List<? extends DivisionMapping> divisionMappings) {
+		return divisionMappingCrudRepository.saveAll(divisionMappings.stream()
+				.filter(obj -> obj instanceof DivisionMappingImpl)
+				.map(obj -> (DivisionMappingImpl) obj).collect(Collectors.toList()));
 	}
 
 	/* vvvvvvvvvvvvvvvvvvvvvv NOT IMPLEMENTED vvvvvvvvvvvvvvvvvvvvv */

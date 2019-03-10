@@ -1,6 +1,7 @@
 package mindbadger.football.repository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,21 +32,6 @@ public class FixtureRepositoryImpl extends AbstractFixtureRepository {
 	@Override
 	public Fixture save(Fixture fixture) {
 		return fixtureCrudRepository.save((FixtureImpl)fixture);
-	}
-
-	@Override
-	public Iterable<Fixture> findAll() {
-		Iterable<FixtureImpl> allFixtureImpls = fixtureCrudRepository.findAll();
-		Set<Fixture> allFixtures = new HashSet<Fixture> ();
-		
-		Iterator<FixtureImpl> iterator = allFixtureImpls.iterator();
-		
-		while (iterator.hasNext()) {
-			FixtureImpl fixtureImpl = iterator.next();
-			allFixtures.add(fixtureImpl);
-		}
-		
-		return allFixtures;
 	}
 
 	@Override
@@ -88,5 +74,16 @@ public class FixtureRepositoryImpl extends AbstractFixtureRepository {
 		return fixtureCrudRepository.getFixtureDatesForDivisionInSeason(seasonDivision);
 	}
 
+	@Override
+	public List<Fixture> findAll() {
+		List<? extends Fixture> divisions = fixtureCrudRepository.findAll();
+		return (List<Fixture>) divisions;
+	}
 
+	@Override
+	public List<? extends Fixture> saveAll(List<? extends Fixture> divisions) {
+		return fixtureCrudRepository.saveAll(divisions.stream()
+				.filter(obj -> obj instanceof FixtureImpl)
+				.map(obj -> (FixtureImpl) obj).collect(Collectors.toList()));
+	}
 }
